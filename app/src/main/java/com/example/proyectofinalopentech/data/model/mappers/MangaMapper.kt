@@ -1,0 +1,24 @@
+package com.example.proyectofinalopentech.data.model.mappers
+
+import com.example.proyectofinalopentech.data.model.MangaResponseDTO
+import com.example.proyectofinalopentech.domain.model.Manga
+
+fun MangaResponseDTO.toDomain():List<Manga> {
+    return data.map { d ->
+        val tags:List<String> = d.attributes?.let { attributes ->
+            attributes.tags.map { tag -> tag.attributes?.name?.en ?: "" }
+        } ?: listOf<String>()
+
+        Manga(
+            d.id ?: "",
+            d.attributes?.title?.en ?: "",
+            d.attributes?.description?.en ?: "",
+            tags,
+            d.attributes?.state ?: "",
+            d.attributes?.status ?: "",
+            "https://uploads.mangadex.org/covers/${d.id}/$",
+            "https://uploads.mangadex.org/covers/${d.id}/$.256.jpg"
+            )
+
+    }.toList<Manga>()
+}
