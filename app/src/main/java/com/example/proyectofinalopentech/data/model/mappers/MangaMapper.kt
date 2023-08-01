@@ -8,7 +8,7 @@ fun MangaResponseDTO.toDomain():List<Manga> {
 
         // tags ---------
         val tags:List<String> = d.attributes?.let { attributes ->
-            attributes.tags.map { tag -> tag.attributes?.name?.en ?: "" }
+            attributes.tags.filter { tag1 -> tag1.attributes?.group == "genre" }.toList().map { tag -> tag.attributes?.name?.en ?: "" }
         } ?: listOf<String>()
 
         // cover art -------

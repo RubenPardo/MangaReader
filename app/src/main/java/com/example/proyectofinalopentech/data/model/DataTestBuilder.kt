@@ -42,9 +42,10 @@ class DataTestBuilder {
                 state = "published",
                 status = "ongoing",
                 year = 2013,
-                tags = listOf(Tags(id = "2","manga",
-                    attributes = TagAttributes(name = Name("Drama"), group = "genre")
-                ))
+                tags = listOf(
+                    Tags(id = "2","manga", attributes = TagAttributes(name = Name("Drama"), group = "genre")),
+                    Tags(id = "2","manga", attributes = TagAttributes(name = Name("Drama"), group = "theme")),
+                )
             ),
             relationships = listOf(Relationships(
                 id = "34",

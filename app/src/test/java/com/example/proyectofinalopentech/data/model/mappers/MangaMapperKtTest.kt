@@ -28,6 +28,7 @@ class MangaMapperKtTest{
         mangas.forEachIndexed{index,manga ->
             assertEquals(manga.title,  "$mangaTitle $index")
             assertEquals(manga.description,  expectedDescription)
+            assertEquals(manga.tags.size,  1)
             assertEquals(manga.fullImageUrl,  "$BASE_URL_IMAGES${manga.id}/$fileName")
         }
 
