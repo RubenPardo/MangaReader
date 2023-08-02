@@ -5,6 +5,7 @@ import com.example.composeexample.testUtil.DefaultDispatcherRule
 import com.example.proyectofinalopentech.data.remote.interfaces.RemoteDataSource
 import com.example.proyectofinalopentech.domain.model.Manga
 import com.example.proyectofinalopentech.domain.model.Response
+import com.example.proyectofinalopentech.domain.model.builders.MangaBuilder
 import com.example.proyectofinalopentech.domain.repositoryInterfaces.MangaRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -43,7 +44,8 @@ class GetMangasUseCaseTest{
 
         val offset = 0
         val limit = 10
-        val mangaExpected = listOf(Manga(id = "1",title = "a", description = "b", tags = listOf("Drama"), status = "ongoing", state = "", fullImageUrl = "", smallImageUrl = ""))
+        val mangaExpected = listOf(
+            Manga(id = "1",title = "a", description = "b", lastUpdate = null, lastVolume = "", lastChapter = "",tags = listOf("Drama"), status = "ongoing", state = "", fullImageUrl = "", smallImageUrl = ""))
 
         coEvery { mangaRepository.getMangas(offset, limit) } returns Response.Success(mangaExpected)
 

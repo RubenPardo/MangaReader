@@ -5,6 +5,7 @@ class MangaResponseTestDTOBuilder {
     var title = "Titulo"
     var state = "published"
     var status = "ongoing"
+    var lastUpdate: String = ""
     var tags = listOf<String>()
     var description = ""
     var numElements: Int = 1
@@ -38,6 +39,7 @@ class MangaResponseTestDTOBuilder {
             list.add(DataTestBuilder()
                 .withId(i.toString())
                 .withTitle(title)
+                .withLastUpdate(lastUpdate)
                 .withDescription(description)
                 .withFileName(fileName)
                 .build(i))
@@ -45,6 +47,11 @@ class MangaResponseTestDTOBuilder {
         return MangaResponseDTO(
             data = list
         )
+    }
+
+    fun withDate(stringDate: String): MangaResponseTestDTOBuilder {
+        this.lastUpdate = stringDate
+        return this
     }
 
 

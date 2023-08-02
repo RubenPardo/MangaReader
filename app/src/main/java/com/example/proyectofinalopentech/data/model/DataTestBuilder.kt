@@ -3,6 +3,7 @@ package com.example.proyectofinalopentech.data.model
 class DataTestBuilder {
     var title = "Titulo"
     var description = ""
+    var lastUpdate = ""
     var fileName:String? = "fileNameURL"
     var id = ""
 
@@ -13,6 +14,11 @@ class DataTestBuilder {
     fun withId(id: String): DataTestBuilder {
         this.id = id
         return this
+    }
+
+    fun withLastUpdate(stringDate: String ): DataTestBuilder{
+        this.lastUpdate = stringDate
+        return  this
     }
 
 
@@ -38,6 +44,7 @@ class DataTestBuilder {
                 description = Description(en = description),
                 isLocked = false,
                 lastChapter = "13",
+                updatedAt = lastUpdate,
                 lastVolume = "2",
                 state = "published",
                 status = "ongoing",

@@ -2,8 +2,10 @@ package com.example.proyectofinalopentech.data.model.mappers
 
 import com.example.proyectofinalopentech.data.model.MangaResponseDTO
 import com.example.proyectofinalopentech.domain.model.Manga
+import com.example.proyectofinalopentech.common.Utils
 
 fun MangaResponseDTO.toDomain():List<Manga> {
+
     return data.map { d ->
 
         // tags ---------
@@ -23,6 +25,9 @@ fun MangaResponseDTO.toDomain():List<Manga> {
             d.attributes?.title?.en ?: "",
             d.attributes?.description?.en ?: "",
             tags,
+            Utils.parseStrigDateToDate(d.attributes?.updatedAt),
+            d.attributes?.lastVolume ?: "",
+            d.attributes?.lastChapter ?: "",
             d.attributes?.state ?: "",
             d.attributes?.status ?: "",
             "https://uploads.mangadex.org/covers/${d.id}/$coverArt",
