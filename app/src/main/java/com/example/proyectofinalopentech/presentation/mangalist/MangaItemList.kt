@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,6 +31,7 @@ import com.example.proyectofinalopentech.R
 import com.example.proyectofinalopentech.common.format
 import com.example.proyectofinalopentech.domain.model.Manga
 import com.example.proyectofinalopentech.domain.model.builders.MangaBuilder
+import com.example.proyectofinalopentech.ui.theme.primaryButton
 
 @Composable
 fun MangaItemList(
@@ -79,17 +81,17 @@ fun BuildMangaContent(manga: Manga) {
 @Composable
 fun BuildButtonReadNow() {
     Button(
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
         onClick = {  })
     {
-        Text("Read Now",style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White))
+        Text("Read Now",style = MaterialTheme.typography.primaryButton)
     }
 }
 
 @Composable
 fun BuildImage(smallImageUrl: String) {
-    Card(shape = RoundedCornerShape(8.dp)) {
+    Card(shape = RoundedCornerShape(18.dp)) {
         AsyncImage(
             placeholder = painterResource(R.drawable.ic_launcher_background),
             model = smallImageUrl,
@@ -97,7 +99,7 @@ fun BuildImage(smallImageUrl: String) {
             error = painterResource(R.drawable.ic_launcher_background),
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .width(120.dp)
+                .width(130.dp)
                 .height(200.dp)
                 .padding(0.dp)
 

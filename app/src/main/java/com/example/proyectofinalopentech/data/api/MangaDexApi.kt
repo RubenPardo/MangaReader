@@ -7,7 +7,7 @@ import retrofit2.http.Query
 interface MangaDexApi {
 
 
-    @GET("manga?includes[]=cover_art")
+    @GET("manga?includes[]=cover_art&contentRating%5B%5D=safe")
     suspend fun getMangas(
         @Query("title") mangaName: String,
         @Query("offset") offset: Int,

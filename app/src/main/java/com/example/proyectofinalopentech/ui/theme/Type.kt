@@ -22,7 +22,7 @@ val Typography = Typography(
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
-        fontSize = 22.sp,
+        fontSize = 24.sp,
         lineHeight = 28.sp,
         letterSpacing = 0.sp
     ),
@@ -41,6 +41,19 @@ val Typography.searchHint: TextStyle
     get() = TextStyle(
             fontFamily = FontFamily.Monospace,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary,
-            fontSize = 24.sp
+            color = MaterialTheme.colorScheme.hintText,
+            fontSize = 18.sp
         )
+
+val Typography.primaryButton: TextStyle
+    @Composable
+    get() = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.textColorOnBlack)
+
+val Typography.textFieldText: TextStyle
+    @Composable
+    get() = TextStyle(
+        fontFamily = FontFamily.Monospace,
+        fontWeight = FontWeight.Bold,
+        color = MaterialTheme.colorScheme.hintText,
+        fontSize = 16.sp
+    )
