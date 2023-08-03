@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface MangaRepository {
 
-    fun getMangas(scope:CoroutineScope): Flow<PagingData<Manga>>
+    fun getMangasByName(mangaName: String): Flow<PagingData<Manga>>
 
 }

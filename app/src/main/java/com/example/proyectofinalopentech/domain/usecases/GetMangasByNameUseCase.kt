@@ -6,11 +6,11 @@ import com.example.proyectofinalopentech.domain.repositoryInterfaces.MangaReposi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
-class GetMangasUseCase(
+class GetMangasByNameUseCase(
     private val repository: MangaRepository
 ) {
 
-    fun invoke(coroutineScope: CoroutineScope):
-            Flow<PagingData<Manga>> = repository.getMangas(coroutineScope)
+    fun invoke(mangaName: String):
+            Flow<PagingData<Manga>> = repository.getMangasByName(mangaName)
 
 }

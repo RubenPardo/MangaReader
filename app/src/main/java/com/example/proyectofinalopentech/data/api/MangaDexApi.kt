@@ -8,6 +8,10 @@ interface MangaDexApi {
 
 
     @GET("manga?includes[]=cover_art")
-    suspend fun getMangas(@Query("offset") offset:Int,@Query("limit") limit:Int): MangaResponseDTO
+    suspend fun getMangas(
+        @Query("title") mangaName: String,
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int
+    ): MangaResponseDTO
 
 }

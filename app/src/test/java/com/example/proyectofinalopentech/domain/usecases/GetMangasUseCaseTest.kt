@@ -2,21 +2,11 @@ package com.example.proyectofinalopentech.domain.usecases
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.composeexample.testUtil.DefaultDispatcherRule
-import com.example.proyectofinalopentech.data.remote.interfaces.RemoteDataSource
-import com.example.proyectofinalopentech.domain.model.Manga
-import com.example.proyectofinalopentech.domain.model.Response
-import com.example.proyectofinalopentech.domain.model.builders.MangaBuilder
 import com.example.proyectofinalopentech.domain.repositoryInterfaces.MangaRepository
 import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import io.mockk.verify
-import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
 
 
 class GetMangasUseCaseTest{
@@ -31,12 +21,12 @@ class GetMangasUseCaseTest{
     @MockK(relaxed = true)
     private lateinit var mangaRepository: MangaRepository
 
-    private lateinit var getMangasUseCase: GetMangasUseCase
+    private lateinit var getMangasUseCase: GetMangasByNameUseCase
 
     @Before
     fun setup(){
         MockKAnnotations.init(this)
-        getMangasUseCase = GetMangasUseCase(mangaRepository)
+        getMangasUseCase = GetMangasByNameUseCase(mangaRepository)
     }
 
    /* @Test

@@ -3,7 +3,6 @@ package com.example.proyectofinalopentech.data.remote
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.proyectofinalopentech.data.model.MangaDto
-import com.example.proyectofinalopentech.data.model.MangaResponseDTO
 import com.example.proyectofinalopentech.data.remote.interfaces.RemoteDataSource
 
 
@@ -11,6 +10,7 @@ const val NETWORK_PAGE_SIZE = 10
 private const val INITIAL_LOAD_SIZE = 1
 
 class MangaPagingSource(
+    private val mangaName:String,
     private val service: RemoteDataSource,
 ) : PagingSource<Int, MangaDto>() {
 
@@ -19,7 +19,7 @@ class MangaPagingSource(
         val position = params.key ?: INITIAL_LOAD_SIZE
         val offset = if (params.key != null) ((position - 1) * NETWORK_PAGE_SIZE) + 1 else INITIAL_LOAD_SIZE
         return try {
-            val responseDTO = service.getMangaList(offset = offset, limit = params.loadSize).data
+            val responseDTO = service.getMangasByName(mangaName = mangaName ,offset = offset, limit = params.loadSize).data
 
             val nextKey = if (responseDTO.isEmpty()) {
                 null

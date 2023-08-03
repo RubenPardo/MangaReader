@@ -1,12 +1,9 @@
 package com.example.proyectofinalopentech.data.repositories
 
-import androidx.lifecycle.asFlow
-import androidx.lifecycle.map
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.liveData
 import androidx.paging.map
 import com.example.proyectofinalopentech.data.model.mappers.toDomain
 import com.example.proyectofinalopentech.data.remote.MangaPagingSource
@@ -19,16 +16,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class MangaRepositoryImpl (private val remoteDataSource: RemoteDataSource) : MangaRepository {
-    override fun getMangas(scope:CoroutineScope): Flow<PagingData<Manga>> {
+    override fun getMangasByName(mangaName: String): Flow<PagingData<Manga>> {
         return Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,
                 enablePlaceholders = false,
             ),
             pagingSourceFactory = {
-                MangaPagingSource(remoteDataSource)
+                MangaPagingSource(mangaName,remoteDataSource)
             }
-        ).flow.map { it.map { dto -> dto.toDomain() } }.cachedIn(scope)
+        ).flow.map { it.map { dto -> dto.toDomain() } }
     }
 
     /*override suspend fun getMangas(offset: Int, limit: Int): LiveData<PagingData<Manga>> {
