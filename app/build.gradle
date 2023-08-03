@@ -72,6 +72,10 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
 
 
+    implementation "androidx.compose.material:material-icons-extended:1.4.3"
+
+
+
     def retrofitVersion = '2.9.0'
     def koin_version = "3.4.2"
 
