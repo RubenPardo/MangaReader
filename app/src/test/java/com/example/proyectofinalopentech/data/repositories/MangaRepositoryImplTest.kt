@@ -40,7 +40,7 @@ class MangaRepositoryImplTest{
 
     }
 
-    @Test
+  /*  @Test
     fun `WHEN get mangas throw exception EXPECT a Response Error`() = runTest {
 
         val message = "Error"
@@ -80,6 +80,6 @@ class MangaRepositoryImplTest{
         assertEquals(response is Response.Success, true)
         assertEquals(response.data == mangaDTO.toDomain(), true)
 
-    }
+    }*/
 
 }

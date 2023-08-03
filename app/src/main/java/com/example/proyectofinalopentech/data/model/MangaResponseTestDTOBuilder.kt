@@ -33,7 +33,7 @@ class MangaResponseTestDTOBuilder {
     }
 
     fun build(): MangaResponseDTO {
-        val list = mutableListOf<Data>()
+        val list = mutableListOf<MangaDto>()
 
         for(i in 0 until numElements) {
             list.add(DataTestBuilder()

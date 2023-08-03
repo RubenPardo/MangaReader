@@ -34,8 +34,8 @@ class DataTestBuilder {
         return this
     }
 
-    fun build(index:Int): Data {
-        return Data(
+    fun build(index:Int): MangaDto {
+        return MangaDto(
             id = id,
             type = "manga",
             attributes = Attributes(

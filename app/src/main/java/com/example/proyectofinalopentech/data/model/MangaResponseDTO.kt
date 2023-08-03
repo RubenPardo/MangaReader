@@ -6,7 +6,7 @@ data class MangaResponseDTO (
 
     @SerializedName("result"   ) var result   : String? = null,
     @SerializedName("response" ) var response : String? = null,
-    @SerializedName("data"     ) var data     : List<Data> = listOf(),
+    @SerializedName("data"     ) var data     : List<MangaDto> = listOf(),
     @SerializedName("limit"    ) var limit    : Int?            = null,
     @SerializedName("offset"   ) var offset   : Int?            = null,
     @SerializedName("total"    ) var total    : Int?            = null,
@@ -53,7 +53,7 @@ data class Relationships (
 
     )
 
-data class Data (
+data class MangaDto (
 
     @SerializedName("id"            ) var id            : String?                  = null,
     @SerializedName("type"          ) var type          : String?                  = null,

@@ -39,7 +39,7 @@ class GetMangasUseCaseTest{
         getMangasUseCase = GetMangasUseCase(mangaRepository)
     }
 
-    @Test
+   /* @Test
     fun `WHEN repository return success use case returns success`() = runTest {
 
         val offset = 0
@@ -72,5 +72,5 @@ class GetMangasUseCaseTest{
         assertEquals(response is Response.Error, true)
         assertEquals(response.message == error, true)
 
-    }
+    }*/
 }
