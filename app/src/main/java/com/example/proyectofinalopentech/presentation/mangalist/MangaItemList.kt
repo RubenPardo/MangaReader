@@ -32,6 +32,9 @@ import com.example.proyectofinalopentech.common.format
 import com.example.proyectofinalopentech.domain.model.Manga
 import com.example.proyectofinalopentech.domain.model.builders.MangaBuilder
 import com.example.proyectofinalopentech.ui.theme.primaryButton
+import com.example.proyectofinalopentech.ui.theme.subtitleLarge
+import com.example.proyectofinalopentech.ui.theme.subtitleSmall
+import com.example.proyectofinalopentech.ui.theme.titleMangaItem
 
 @Composable
 fun MangaItemList(
@@ -57,18 +60,18 @@ fun BuildMangaContent(manga: Manga) {
     ){
         Column {
             Spacer(modifier = Modifier.height(8.dp))
-            Text(manga.title, style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold), maxLines = 2, overflow = TextOverflow.Ellipsis)
+            Text(manga.title, style = MaterialTheme.typography.titleMangaItem, maxLines = 2, overflow = TextOverflow.Ellipsis)
             Spacer(modifier = Modifier.height(8.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
 
-                if(manga.lastUpdate!=null)Text(manga.lastUpdate.format(), style = TextStyle(fontSize = 16.sp, color = Color.Gray,fontWeight = FontWeight.Bold), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                if(manga.lastUpdate!=null)Text(manga.lastUpdate.format(), style = MaterialTheme.typography.subtitleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
 
                 Spacer(modifier = Modifier.width(8.dp))
 
                 if(manga.lastVolume.isNotEmpty()){
-                    Text("Vol. ${manga.lastVolume}", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text("Vol. ${manga.lastVolume}", style = MaterialTheme.typography.subtitleLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }else if(manga.lastChapter.isNotEmpty()){
-                    Text("Chapter. ${manga.lastChapter}", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text("Chapter. ${manga.lastChapter}", style = MaterialTheme.typography.subtitleLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
 
             }
