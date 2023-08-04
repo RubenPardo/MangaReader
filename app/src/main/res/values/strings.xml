@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ProyectoFinalOpenTech</string>
+    <string name="manga_details">Details</string>
+    <string name="browse">Browse</string>
+    <string name="saved_panels">Saved panels</string>
+    <string name="my_mangas">My mangas</string>
 </resources>

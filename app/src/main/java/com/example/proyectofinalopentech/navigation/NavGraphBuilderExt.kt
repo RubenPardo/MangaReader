@@ -1,5 +1,6 @@
 package com.example.proyectofinalopentech.navigation
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -10,9 +11,9 @@ import com.example.proyectofinalopentech.presentation.screens.MyMangasScreen
 import com.example.proyectofinalopentech.presentation.screens.SavedPanelsScreen
 
 
-fun NavGraphBuilder.addMangaSearchScreen(navController: NavController){
+fun NavGraphBuilder.addMangaSearchScreen(navController: NavController, scrollState: LazyListState){
     composable(Screen.MangaSearchScreen.route){
-        MangaSearchScreen { navController.navigate(Screen.MangaDetails.route + "/$it") }
+        MangaSearchScreen(scrollState) { navController.navigate(Screen.MangaDetails.route + "/$it") }
     }
 }
 
