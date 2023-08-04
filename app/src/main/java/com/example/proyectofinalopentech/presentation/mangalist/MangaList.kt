@@ -1,9 +1,11 @@
 package com.example.proyectofinalopentech.presentation.mangalist
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -22,6 +24,8 @@ fun MangaList(
     val pagingData = mangaListViewModel.get(mangaName = mangaName).collectAsLazyPagingItems()
 
     LazyColumn(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize(),
         state = scrollState
     ){

@@ -107,7 +107,7 @@ fun BuildButtonReadNow(
             // scroll up to show again the top bar if it was hidden
             scope.launch {
                 scrollState.scroll(scrollPriority = MutatePriority.UserInput){
-                    this.scrollBy(-0.5f)
+                    this.scrollBy(-5f)
                 }
             }
             gotToMangaDetails.invoke(mangaId)
