@@ -1,7 +1,9 @@
 package com.example.proyectofinalopentech.data.api
 
+import com.example.proyectofinalopentech.data.model.ChapterResponseDTO
 import com.example.proyectofinalopentech.data.model.MangaResponseDTO
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MangaDexApi {
@@ -13,5 +15,10 @@ interface MangaDexApi {
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
     ): MangaResponseDTO
+
+    @GET("manga/{id}/aggregate")
+    suspend fun getChapters(
+        @Path("id") id: String,
+    ): ChapterResponseDTO
 
 }

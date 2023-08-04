@@ -5,6 +5,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
+import com.example.proyectofinalopentech.data.model.ChapterResponseDTO
+import com.example.proyectofinalopentech.data.model.MangaResponseDTO
 import com.example.proyectofinalopentech.data.model.mappers.toDomain
 import com.example.proyectofinalopentech.data.remote.MangaPagingSource
 import com.example.proyectofinalopentech.data.remote.NETWORK_PAGE_SIZE
@@ -28,10 +30,7 @@ class MangaRepositoryImpl (private val remoteDataSource: RemoteDataSource) : Man
         ).flow.map { it.map { dto -> dto.toDomain() } }
     }
 
-    /*override suspend fun getMangas(offset: Int, limit: Int): LiveData<PagingData<Manga>> {
-        return try{
-            val mangaResponseDTO = remoteDataSource.getMangaList(offset,limit)
-            Response.Success(mangaResponseDTO.toDomain())
-        }catch (e:Exception){ Response.Error(e.message) }
-    }*/
+    override suspend fun getChaptersByMangaId(mangaId: String): ChapterResponseDTO = remoteDataSource.getChaptersByMangaId(mangaId)
+
+
 }

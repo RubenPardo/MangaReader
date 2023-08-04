@@ -7,7 +7,7 @@ import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 
 val presentationModule = module{
-    viewModel{ MangaListViewModel(get()) }
+    viewModel{ MangaListViewModel(get(),get()) }
     viewModelOf(::MangaListViewModel)
     /*viewModel{ HeroListViewModel(get()) }
     viewModelOf(::HeroListViewModel)
