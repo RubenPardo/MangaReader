@@ -3,7 +3,6 @@ package com.example.proyectofinalopentech.presentation.mangalist
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.LoadState
@@ -30,7 +29,7 @@ fun MangaList(
 
         items(pagingData.itemCount){ index ->
             pagingData[index]?.let {
-                MangaItemList(manga = it,gotToMangaDetails)
+                MangaItemList(manga = it,gotToMangaDetails,scrollState)
             }
 
         }

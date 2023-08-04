@@ -1,5 +1,6 @@
 package com.example.proyectofinalopentech.presentation.mangalist
 
+import androidx.compose.foundation.MutatePriority
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -15,6 +17,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,11 +38,14 @@ import com.example.proyectofinalopentech.ui.theme.primaryButton
 import com.example.proyectofinalopentech.ui.theme.subtitleLarge
 import com.example.proyectofinalopentech.ui.theme.subtitleSmall
 import com.example.proyectofinalopentech.ui.theme.titleMangaItem
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun MangaItemList(
     manga: Manga,
-    gotToMangaDetails: (mangaId: String) -> Unit
+    gotToMangaDetails: (mangaId: String) -> Unit,
+    scrollState: LazyListState
 ) {
     Row(
         modifier = Modifier
@@ -45,13 +54,17 @@ fun MangaItemList(
     ) {
         BuildImage(manga.smallImageUrl)
         Spacer(modifier = Modifier.width(16.dp))
-        BuildMangaContent(manga,gotToMangaDetails)
+        BuildMangaContent(manga,gotToMangaDetails,scrollState)
     }
 
 }
 
 @Composable
-fun BuildMangaContent(manga: Manga, gotToMangaDetails: (mangaId: String) -> Unit) {
+fun BuildMangaContent(
+    manga: Manga,
+    gotToMangaDetails: (mangaId: String) -> Unit,
+    scrollState: LazyListState
+) {
     Column (
         Modifier.height(190.dp),
         verticalArrangement = Arrangement.SpaceBetween,
@@ -74,21 +87,37 @@ fun BuildMangaContent(manga: Manga, gotToMangaDetails: (mangaId: String) -> Unit
 
             }
         }
-        BuildButtonReadNow(manga.id,gotToMangaDetails)
+        BuildButtonReadNow(manga.id,gotToMangaDetails,scrollState)
 
     }
 }
 
 @Composable
-fun BuildButtonReadNow(mangaId: String,gotToMangaDetails: (mangaId: String) -> Unit) {
+fun BuildButtonReadNow(
+    mangaId: String,
+    gotToMangaDetails: (mangaId: String) -> Unit,
+    scrollState: LazyListState
+) {
+    val scope = rememberCoroutineScope()
+
     Button(
         shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
-        onClick = { gotToMangaDetails.invoke(mangaId) })
+        onClick = {
+            // scroll up to show again the top bar if it was hidden
+            scope.launch {
+                scrollState.scroll(scrollPriority = MutatePriority.UserInput){
+                    this.scrollBy(-0.5f)
+                }
+            }
+            gotToMangaDetails.invoke(mangaId)
+
+        })
     {
         Text("Read Now",style = MaterialTheme.typography.primaryButton)
     }
 }
+
 
 @Composable
 fun BuildImage(smallImageUrl: String) {
@@ -107,16 +136,4 @@ fun BuildImage(smallImageUrl: String) {
         )
     }
 }
-
-@Preview
-@Composable
-fun PreviewManga(){
-    MangaItemList(
-        MangaBuilder()
-            .withTtitle("Jojo's Bizarre Adventure Part 3 - Stardust Cursaders")
-            .build(),
-        {  }
-    )
-}
-
 
