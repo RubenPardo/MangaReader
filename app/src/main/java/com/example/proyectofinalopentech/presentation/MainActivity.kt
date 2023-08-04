@@ -8,13 +8,19 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.proyectofinalopentech.navigation.BottomNavigationScreens
+import com.example.proyectofinalopentech.navigation.NavigationGraph
 import com.example.proyectofinalopentech.presentation.common.BottomNav
 import com.example.proyectofinalopentech.presentation.common.CustomTopAppBar
 import com.example.proyectofinalopentech.presentation.mangalist.MangaList
@@ -27,32 +33,44 @@ class MainActivity(): ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ProyectoFinalOpenTechTheme() {
-                var mangaName by remember { mutableStateOf("") }
-                var isScrollingUp by remember { mutableStateOf(false) }
+                val navController = rememberNavController()
                 Scaffold(
+                    bottomBar = { BuildNavBar(navController)},
                     topBar = { CustomTopAppBar(title = "Browse", backCallback = null) },
                 ){ innerPadding ->
                     Box {
-
-                        Column {
-                            Spacer(modifier = Modifier.height(innerPadding.calculateTopPadding()))
-                            SearchBarComponent(
-                                hint = "Search Manga"
-                            ){ value ->
-                                mangaName = value
-                            }
-                            // GenreFilterComponent()
-
-                            MangaList(mangaName = mangaName){ value ->
-                                isScrollingUp = value
-                            }
+                        Box(modifier = Modifier.padding(top = innerPadding.calculateTopPadding())){
+                            NavigationGraph(navController)
                         }
-                        BottomNav(callback = { println(it) },this, hide = isScrollingUp)
                     }
 
                 }
             }
         }
+    }
+
+    @Composable
+    private fun BuildNavBar(navController: NavHostController) {
+       return BottomNav(
+            callback = { screen->
+                navController.navigate(screen.route) {
+
+                    navController.graph.startDestinationRoute?.let { screen_route ->
+                        popUpTo(screen_route) {
+                            saveState = true
+                            inclusive = true
+                        }
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }},
+            listOf(
+                BottomNavigationScreens.SavedPanels,
+                BottomNavigationScreens.MangaSearch,
+                BottomNavigationScreens.MyMangas,
+            ),
+            navController = navController,
+            hide = false)
     }
 }
 

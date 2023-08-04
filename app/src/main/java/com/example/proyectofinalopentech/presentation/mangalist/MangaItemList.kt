@@ -20,12 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.proyectofinalopentech.R
 import com.example.proyectofinalopentech.common.format
@@ -38,7 +35,8 @@ import com.example.proyectofinalopentech.ui.theme.titleMangaItem
 
 @Composable
 fun MangaItemList(
-    manga: Manga
+    manga: Manga,
+    gotToMangaDetails: (mangaId: String) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -47,13 +45,13 @@ fun MangaItemList(
     ) {
         BuildImage(manga.smallImageUrl)
         Spacer(modifier = Modifier.width(16.dp))
-        BuildMangaContent(manga)
+        BuildMangaContent(manga,gotToMangaDetails)
     }
 
 }
 
 @Composable
-fun BuildMangaContent(manga: Manga) {
+fun BuildMangaContent(manga: Manga, gotToMangaDetails: (mangaId: String) -> Unit) {
     Column (
         Modifier.height(190.dp),
         verticalArrangement = Arrangement.SpaceBetween,
@@ -76,17 +74,17 @@ fun BuildMangaContent(manga: Manga) {
 
             }
         }
-        BuildButtonReadNow()
+        BuildButtonReadNow(manga.id,gotToMangaDetails)
 
     }
 }
 
 @Composable
-fun BuildButtonReadNow() {
+fun BuildButtonReadNow(mangaId: String,gotToMangaDetails: (mangaId: String) -> Unit) {
     Button(
         shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
-        onClick = {  })
+        onClick = { gotToMangaDetails.invoke(mangaId) })
     {
         Text("Read Now",style = MaterialTheme.typography.primaryButton)
     }
@@ -116,7 +114,8 @@ fun PreviewManga(){
     MangaItemList(
         MangaBuilder()
             .withTtitle("Jojo's Bizarre Adventure Part 3 - Stardust Cursaders")
-            .build()
+            .build(),
+        {  }
     )
 }
 

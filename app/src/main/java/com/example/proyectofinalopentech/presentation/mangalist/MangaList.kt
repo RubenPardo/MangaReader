@@ -2,25 +2,19 @@ package com.example.proyectofinalopentech.presentation.mangalist
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.proyectofinalopentech.presentation.common.LoadingView
-import com.example.proyectofinalopentech.presentation.common.isScrollingUp
 import com.example.proyectofinalopentech.presentation.mangalist.viewmodels.MangaListViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MangaList(
     mangaName:String,
+    gotToMangaDetails: (mangaId:String) -> Unit,
     mangaListViewModel: MangaListViewModel = koinViewModel(),
     isScrollingUp: (Boolean) -> Unit,
 ) {
@@ -37,7 +31,7 @@ fun MangaList(
 
         items(pagingData.itemCount){ index ->
             pagingData[index]?.let {
-                MangaItemList(manga = it)
+                MangaItemList(manga = it,gotToMangaDetails)
             }
 
         }
