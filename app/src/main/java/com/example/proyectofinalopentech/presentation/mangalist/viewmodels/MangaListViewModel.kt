@@ -4,9 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.proyectofinalopentech.data.model.mappers.toDomain
 import com.example.proyectofinalopentech.domain.model.Manga
-import com.example.proyectofinalopentech.domain.repositoryInterfaces.MangaRepository
+import com.example.proyectofinalopentech.domain.usecases.GetMangaChaptersByIdUseCase
 import com.example.proyectofinalopentech.domain.usecases.GetMangasByNameUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class MangaListViewModel(
     private val getMangasByNameUseCase: GetMangasByNameUseCase,
-    private val repository: MangaRepository,
+    private val getMangaChaptersById: GetMangaChaptersByIdUseCase,
 ): ViewModel() {
 
 
@@ -26,8 +25,8 @@ class MangaListViewModel(
     fun get(mangaName:String):Flow<PagingData<Manga>>  {
 
         viewModelScope.launch (Dispatchers.IO){
-            val response = repository.getChaptersByMangaId("67c03443-8b06-44e1-9784-55b33bc3428d")
-            println(response.toDomain())
+            val response = getMangaChaptersById("67c03443-8b06-44e1-9784-55b33bc3428d")
+            println(response)
         }
 
 

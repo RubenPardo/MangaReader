@@ -12,6 +12,8 @@ import com.example.proyectofinalopentech.data.remote.MangaPagingSource
 import com.example.proyectofinalopentech.data.remote.NETWORK_PAGE_SIZE
 import com.example.proyectofinalopentech.data.remote.interfaces.RemoteDataSource
 import com.example.proyectofinalopentech.domain.model.Manga
+import com.example.proyectofinalopentech.domain.model.Response
+import com.example.proyectofinalopentech.domain.model.Volume
 import com.example.proyectofinalopentech.domain.repositoryInterfaces.MangaRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -30,7 +32,13 @@ class MangaRepositoryImpl (private val remoteDataSource: RemoteDataSource) : Man
         ).flow.map { it.map { dto -> dto.toDomain() } }
     }
 
-    override suspend fun getChaptersByMangaId(mangaId: String): ChapterResponseDTO = remoteDataSource.getChaptersByMangaId(mangaId)
+    override suspend fun getChaptersByMangaId(mangaId: String): Response<List<Volume>> {
+        return try {
+            Response.Success(remoteDataSource.getChaptersByMangaId(mangaId).toDomain())
+        }catch (e: Exception){
+            Response.Error(e.message)
+        }
+    }
 
 
 }

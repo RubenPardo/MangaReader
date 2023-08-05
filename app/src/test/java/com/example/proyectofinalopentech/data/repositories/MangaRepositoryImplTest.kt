@@ -2,7 +2,10 @@ package com.example.proyectofinalopentech.data.repositories
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.composeexample.testUtil.DefaultDispatcherRule
+import com.example.proyectofinalopentech.data.model.ChapterDTO
+import com.example.proyectofinalopentech.data.model.ChapterResponseDTO
 import com.example.proyectofinalopentech.data.model.MangaResponseTestDTOBuilder
+import com.example.proyectofinalopentech.data.model.VolumeDTO
 import com.example.proyectofinalopentech.data.model.mappers.toDomain
 import com.example.proyectofinalopentech.data.remote.interfaces.RemoteDataSource
 import com.example.proyectofinalopentech.domain.model.Response
@@ -40,46 +43,56 @@ class MangaRepositoryImplTest{
 
     }
 
-  /*  @Test
-    fun `WHEN get mangas throw exception EXPECT a Response Error`() = runTest {
+    @Test
+    fun `WHEN get chapters remote datasource throw exception EXPECT repository return a Response Error`() = runTest {
 
         val message = "Error"
-        val offset = 0
-        val limit = 10
+        val mangaId = "1"
 
-        coEvery { remoteDataSource.getMangaList(offset,limit) } throws Exception(message)
+        coEvery { remoteDataSource.getChaptersByMangaId(mangaId) } throws Exception(message)
 
-        val response = mangaRepository.getMangas(offset,limit)
+        val response = mangaRepository.getChaptersByMangaId(mangaId)
 
-        coVerify (exactly = 1){ remoteDataSource.getMangaList(offset,limit) }
+        coVerify (exactly = 1){ remoteDataSource.getChaptersByMangaId(mangaId) }
         assertEquals(response is Response.Error, true)
         assertEquals(response.message == message, true)
 
     }
 
     @Test
-    fun `WHEN get mangas return MangaResponseDTO EXPECT a Response Success`() = runTest {
+    fun `WHEN get chapters remote datasource return Dto EXPECT repository return a Response DO`() = runTest {
 
-        val offset = 0
-        val limit = 10
-        val fileName = "FileName"
-        val mangaTitle = "Titulo"
-        val expectedDescription= "Manga descripcion"
+        val numVolume = 5
+        val numChapters = 20
+        val mangaID = "1"
 
-        val mangaDTO = MangaResponseTestDTOBuilder()
-            .withNumElements(limit)
-            .withTitle(mangaTitle)
-            .withDescription(expectedDescription)
-            .withFileName(fileName).build()
+        val dto = ChapterResponseDTO(
+            result ="ok",
+            volumes = Array(numVolume){ index->
+                VolumeDTO(
+                    name = index.toString(),
+                    count = "5",
+                    chapters = Array(numChapters) {
+                        ChapterDTO(
+                            name = it.toString(),
+                            id = it.toString()
+                        )
+                    }.toList()
 
-        coEvery { remoteDataSource.getMangaList(offset,limit) } returns mangaDTO
+                )
+            }.toList()
+        )
 
-        val response = mangaRepository.getMangas(offset,limit)
+        val expectResult = dto.toDomain()
 
-        coVerify (exactly = 1){ remoteDataSource.getMangaList(offset,limit) }
+        coEvery { remoteDataSource.getChaptersByMangaId(mangaID) } returns dto
+
+        val response = mangaRepository.getChaptersByMangaId(mangaID)
+
+        coVerify (exactly = 1){ remoteDataSource.getChaptersByMangaId(mangaID) }
         assertEquals(response is Response.Success, true)
-        assertEquals(response.data == mangaDTO.toDomain(), true)
+        assertEquals(response.data == expectResult, true)
 
-    }*/
+    }
 
 }
