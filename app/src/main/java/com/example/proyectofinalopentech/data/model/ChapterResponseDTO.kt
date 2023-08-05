@@ -8,57 +8,66 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import java.lang.reflect.Type
 
-data class ChapterResponseDTO (
+data class ChapterResponseDTO(
 
-    @SerializedName("result"  ) var result  : String?  = null,
-    @SerializedName("volumes" ) var volumes : Map<String, Volume> = emptyMap()
+    @SerializedName("result"  ) var result: String?  = null,
+    @SerializedName("volumes" ) var volumes: List<VolumeDTO> = emptyList()
 
 )
 
-data class Volume (
+data class VolumeDTO (
     @SerializedName("volume"  ) var name  : String?  = null,
     @SerializedName("count"  ) var count  : String?  = null,
-    @SerializedName("chapters" ) var chapters : Map<String,Chapter> = emptyMap()
+    @SerializedName("chapters" ) var chapters : List<ChapterDTO> = emptyList()
 )
 
 
-data class Chapter (
+data class ChapterDTO (
     @SerializedName("chapter"  ) var name  : String?  = null,
     @SerializedName("id"  ) var id  : String?  = null,
 )
 
-class VolumeAdapterFactory : JsonAdapter.Factory {
+class ChapterResponseDTOAdapterFactory : JsonAdapter.Factory {
     override fun create(type: Type, annotations: Set<Annotation>, moshi: Moshi): JsonAdapter<*>? {
         if (Types.getRawType(type) == ChapterResponseDTO::class.java) {
-            return VolumesResponseAdapter(moshi).nullSafe()
+            return ChapterResponseDTOAdapter(moshi).nullSafe()
         }
         return null
     }
 }
 
-class VolumesResponseAdapter(moshi: Moshi) : JsonAdapter<ChapterResponseDTO>() {
+class ChapterResponseDTOAdapter(moshi: Moshi) : JsonAdapter<ChapterResponseDTO>() {
     private val adapter: JsonAdapter<ChapterResponseDTO> = moshi.adapter(ChapterResponseDTO::class.java)
 
-    override fun fromJson(reader: JsonReader): ChapterResponseDTO? {
+    override fun fromJson(reader: JsonReader): ChapterResponseDTO {
         val jsonObject = reader.readJsonValue() as Map<String, Any>
         val volumesObject = jsonObject["volumes"] as? Map<String, Any>
-        val volumesMap = mutableMapOf<String, Volume>()
+        var volumes: List<VolumeDTO>? = listOf<VolumeDTO>()
 
-        volumesObject?.forEach { (key, value) ->
+        volumes = volumesObject?.map { (key, value) ->
             val volumeJson = value as? Map<String, Any>
             //val volume = moshi.adapter(Volume::class.java).fromJsonValue(volumeJson)
-            val volume = Volume(
-                name = volumeJson?.get("volume") as String ?: "",
-                (volumeJson["count"] as Double).toString() ?: "0",
-                volumeJson["chapters"] as? Map<String, Chapter> ?: emptyMap(),
+            VolumeDTO(
+                name = volumeJson?.get("volume") as String,
+                (volumeJson["count"] as Double).toString(),
+                chaptersFromJson(volumeJson["chapters"] as? Map<String, Any> ),
             )
-            volumesMap[key] = volume ?: Volume("", "0", emptyMap())
-        }
+        }?.toList()
 
         return ChapterResponseDTO(
             jsonObject["result"] as? String ?: "",
-            volumesMap
+            volumes ?: emptyList()
         )
+    }
+
+    private fun chaptersFromJson(chaptersJson: Map<String, Any>?): List<ChapterDTO> {
+        return  chaptersJson?.map { (name, value) ->
+            val chapterJson = value as? Map<String, Any>
+            ChapterDTO(
+                name = name,
+                (chapterJson?.get("id") as String).toString(),
+            )
+        }?.toList() ?: emptyList()
     }
 
     override fun toJson(writer: JsonWriter, value: ChapterResponseDTO?) {

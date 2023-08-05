@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.example.proyectofinalopentech.data.model.mappers.toDomain
 import com.example.proyectofinalopentech.domain.model.Manga
 import com.example.proyectofinalopentech.domain.repositoryInterfaces.MangaRepository
 import com.example.proyectofinalopentech.domain.usecases.GetMangasByNameUseCase
@@ -26,7 +27,7 @@ class MangaListViewModel(
 
         viewModelScope.launch (Dispatchers.IO){
             val response = repository.getChaptersByMangaId("67c03443-8b06-44e1-9784-55b33bc3428d")
-            println(response)
+            println(response.toDomain())
         }
 
 

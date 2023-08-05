@@ -1,7 +1,7 @@
 package com.example.proyectofinalopentech.di
 
 import com.example.proyectofinalopentech.data.api.MangaDexApi
-import com.example.proyectofinalopentech.data.model.VolumeAdapterFactory
+import com.example.proyectofinalopentech.data.model.ChapterResponseDTOAdapterFactory
 import com.example.proyectofinalopentech.data.remote.implementation.RemoteDataSourceRetrofit
 import com.example.proyectofinalopentech.data.remote.interfaces.RemoteDataSource
 import com.example.proyectofinalopentech.data.repositories.MangaRepositoryImpl
@@ -55,7 +55,7 @@ val dataModule = module{
 
     single<Moshi>{
         Moshi.Builder()
-            .add(VolumeAdapterFactory())
+            .add(ChapterResponseDTOAdapterFactory())
             .addLast(KotlinJsonAdapterFactory())
             .build()
     }
