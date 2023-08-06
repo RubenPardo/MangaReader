@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.proyectofinalopentech.presentation.common.LoadingView
-import com.example.proyectofinalopentech.presentation.mangalist.viewmodels.MangaListViewModel
+import com.example.proyectofinalopentech.presentation.viewmodels.MangaListViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

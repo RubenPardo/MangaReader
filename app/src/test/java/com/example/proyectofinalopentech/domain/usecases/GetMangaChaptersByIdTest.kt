@@ -2,8 +2,8 @@ package com.example.proyectofinalopentech.domain.usecases
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.composeexample.testUtil.DefaultDispatcherRule
+import com.example.proyectofinalopentech.domain.model.Chapter
 import com.example.proyectofinalopentech.domain.model.Response
-import com.example.proyectofinalopentech.domain.model.Volume
 import com.example.proyectofinalopentech.domain.repositoryInterfaces.MangaRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -38,7 +38,7 @@ class GetMangaChaptersByIdTest{
      fun `WHEN repository return success use case returns success`() = runTest {
 
          val id = "1"
-         val chaptersExpected = Array(4){Volume(it.toString(), listOf())}.toList()
+         val chaptersExpected = Array(4){Chapter(it.toString(), it.toString())}.toList()
 
          coEvery { mangaRepository.getChaptersByMangaId(id) } returns Response.Success(chaptersExpected)
 

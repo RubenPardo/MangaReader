@@ -1,4 +1,4 @@
-package com.example.proyectofinalopentech.presentation.mangalist.viewmodels
+package com.example.proyectofinalopentech.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 
 class MangaListViewModel(
     private val getMangasByNameUseCase: GetMangasByNameUseCase,
-    private val getMangaChaptersById: GetMangaChaptersByIdUseCase,
 ): ViewModel() {
 
 
@@ -23,13 +22,6 @@ class MangaListViewModel(
 
 
     fun get(mangaName:String):Flow<PagingData<Manga>>  {
-
-        viewModelScope.launch (Dispatchers.IO){
-            val response = getMangaChaptersById("67c03443-8b06-44e1-9784-55b33bc3428d")
-            println(response)
-        }
-
-
 
         if(this.mangaName==null){
             this.mangaName = mangaName

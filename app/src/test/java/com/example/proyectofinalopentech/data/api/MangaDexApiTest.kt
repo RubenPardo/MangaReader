@@ -2,9 +2,7 @@ package com.example.proyectofinalopentech.data.api
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.composeexample.testUtil.DefaultDispatcherRule
-import com.example.proyectofinalopentech.data.model.ChapterResponseDTO
 import com.example.proyectofinalopentech.data.model.MangaResponseDTO
-import com.example.proyectofinalopentech.domain.model.Chapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -22,7 +20,7 @@ import org.hamcrest.CoreMatchers.*
 import retrofit2.HttpException
 
 @ExperimentalCoroutinesApi
-class DragonBallApiTest {
+class MangaDexApiTest {
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()

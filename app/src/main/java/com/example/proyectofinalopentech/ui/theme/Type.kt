@@ -54,6 +54,15 @@ val Typography.primaryButton: TextStyle
         color = MaterialTheme.colorScheme.textColorOnBlack
     )
 
+val Typography.primaryButtonSmall: TextStyle
+    @Composable
+    get() = TextStyle(
+        fontSize = 12.sp,
+        fontWeight = FontWeight.Bold,
+        fontFamily = FontFamily.Monospace,
+        color = MaterialTheme.colorScheme.textColorOnBlack
+    )
+
 val Typography.titleMangaItem: TextStyle
     @Composable
     get() = TextStyle(

@@ -25,8 +25,8 @@ class VolumeMapperKtTest{
                     count = "5",
                     chapters = Array(numChapters) {
                         ChapterDTO(
-                            name = it.toString(),
-                            id = it.toString()
+                            name = ((index*numChapters)+it).toString(),
+                            id = ((index*numChapters)+it).toString()
                         )
                     }.toList()
 
@@ -34,17 +34,14 @@ class VolumeMapperKtTest{
             }.toList()
         )
 
-        val volumes = dto.toDomain()
+        val chapters = dto.toDomain()
 
-        Assert.assertEquals(volumes.size, numVolume)
-        volumes.forEachIndexed{index,volume ->
-            Assert.assertEquals(volume.chapters.size, numChapters)
-            Assert.assertEquals(volume.name, index.toString())
-            volume.chapters.forEachIndexed{ i,ch->
-                Assert.assertEquals(ch.name, i.toString())
-                Assert.assertEquals(ch.id, i.toString())
 
-            }
+        Assert.assertEquals(chapters.size, numVolume*numChapters)
+        chapters.forEachIndexed{index,chapter ->
+            Assert.assertEquals(chapter.name, index.toString())
+            Assert.assertEquals(chapter.id, index.toString())
+
         }
 
     }

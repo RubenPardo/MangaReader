@@ -4,4 +4,6 @@
     <string name="browse">Browse</string>
     <string name="saved_panels">Saved panels</string>
     <string name="my_mangas">My mangas</string>
+    <string name="error_geting_chapters">Unable to get the chapters</string>
+    <string name="volume">Volume</string>
 </resources>
