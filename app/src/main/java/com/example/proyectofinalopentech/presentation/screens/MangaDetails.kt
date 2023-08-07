@@ -71,7 +71,7 @@ fun Prueba(uiSate: MangaDetailsUiState, mangaDetailsViewModel: MangaDetailsViewM
     LazyColumn(
     ) {
 
-        item { uiSate.mangaInfo?.let { BuildHeader(uiSate.mangaInfo) } }
+        item { uiSate.mangaInfo?.let { BuildHeader(uiSate.mangaInfo,mangaDetailsViewModel) } }
         item{
             Column {
                 TabRow(
@@ -126,11 +126,8 @@ fun BuildMangaInfo(mangaInfo: Manga) {
 }
 
 @Composable
-fun BuildHeader(mangaInfo: Manga) {
+fun BuildHeader(mangaInfo: Manga, viewModel: MangaDetailsViewModel?) {
 
-    var fav by remember {
-        mutableStateOf(false)
-    }
         Box{
             AsyncImage(
                 placeholder = painterResource(R.drawable.ic_launcher_background),
@@ -148,11 +145,11 @@ fun BuildHeader(mangaInfo: Manga) {
                     .padding(end = 8.dp,)
                     .align(Alignment.TopEnd)
                     .size(72.dp),
-                isMarked = fav,
+                isMarked = mangaInfo.isFav,
                 iconMarked = Icons.Outlined.Bookmark,
                 iconDefault= Icons.Outlined.BookmarkBorder){
-                fav = !fav
-            }
+                    viewModel?.setFav(mangaInfo.id)
+                }
         }
 
 }

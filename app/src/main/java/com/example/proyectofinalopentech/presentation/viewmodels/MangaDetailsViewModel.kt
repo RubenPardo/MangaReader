@@ -7,6 +7,7 @@ import com.example.proyectofinalopentech.domain.model.Manga
 import com.example.proyectofinalopentech.domain.model.Response
 import com.example.proyectofinalopentech.domain.usecases.GetMangaChaptersByIdUseCase
 import com.example.proyectofinalopentech.domain.usecases.GetMangaInfoUseCase
+import com.example.proyectofinalopentech.domain.usecases.SetMangaFavUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
 class MangaDetailsViewModel(
     private val getMangaChaptersByIdUseCase: GetMangaChaptersByIdUseCase,
     private val getMangaInfoUseCase: GetMangaInfoUseCase,
+    private val setMangaFavUseCase: SetMangaFavUseCase,
 ): ViewModel() {
 
     private var currentState = MangaDetailsUiState()
@@ -50,11 +52,32 @@ class MangaDetailsViewModel(
                     isLoadingMangaInfo = false, isError = true))
 
                 // content
-                is Response.Success ->
+                is Response.Success ->{
                     emitNewState(currentState.copy(
                         isLoadingMangaInfo = false, isError = false, mangaInfo = response.data))
+                }
 
             }
+        }
+    }
+
+    fun setFav(mangaId: String) {
+        viewModelScope.launch (Dispatchers.IO){
+            currentState.mangaInfo?.let { manga->
+                when(  val response = setMangaFavUseCase(manga)){
+                    // error
+                    is Response.Error -> {
+
+                    }
+                    // content
+                    is Response.Success ->{
+                        val currentManga = currentState.mangaInfo
+                        emitNewState(currentState.copy(mangaInfo = currentManga?.copy(isFav = !currentManga.isFav)))
+                    }
+
+                }
+            }
+
         }
     }
 

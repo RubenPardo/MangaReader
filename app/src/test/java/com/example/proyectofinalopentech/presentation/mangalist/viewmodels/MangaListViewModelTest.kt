@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.paging.PagingData
 import com.example.composeexample.testUtil.DefaultDispatcherRule
 import com.example.proyectofinalopentech.data.api.MangaDexApi
+import com.example.proyectofinalopentech.data.local.interfaces.LocalDataSource
 import com.example.proyectofinalopentech.data.model.MangaResponseTestDTOBuilder
 import com.example.proyectofinalopentech.data.remote.implementation.RemoteDataSourceRetrofit
 import com.example.proyectofinalopentech.data.remote.interfaces.RemoteDataSource
@@ -37,6 +38,9 @@ class MangaListViewModelTest{
 
 
     @MockK(relaxed = true)
+    private lateinit var localDataSource: LocalDataSource
+
+    @MockK(relaxed = true)
     private lateinit var mangaDexApi: MangaDexApi
 
     private lateinit var remoteDataSource: RemoteDataSource
@@ -54,7 +58,7 @@ class MangaListViewModelTest{
     fun setup(){
         MockKAnnotations.init(this)
         remoteDataSource = RemoteDataSourceRetrofit(mangaDexApi)
-        mangaRepository = MangaRepositoryImpl(remoteDataSource)
+        mangaRepository = MangaRepositoryImpl(remoteDataSource,localDataSource)
         getMangasByNameUseCase = GetMangasByNameUseCase(mangaRepository)
         mangaListViewModel = MangaListViewModel(getMangasByNameUseCase)
 
