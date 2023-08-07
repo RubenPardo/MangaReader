@@ -2,7 +2,7 @@ package com.example.proyectofinalopentech.data.api
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.composeexample.testUtil.DefaultDispatcherRule
-import com.example.proyectofinalopentech.data.model.MangaResponseDTO
+import com.example.proyectofinalopentech.data.model.MangaListResponseDTO
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -39,21 +39,21 @@ class MangaDexApiTest {
     @Test
     fun `WHEN get mangas is called with a non existing manga name EXPECT empty list of data`() = runTest {
        val response =  api.getMangas("adnsdfjksfn",0,10)
-        assertThat(response is MangaResponseDTO, `is`(true))
+        assertThat(response is MangaListResponseDTO, `is`(true))
         assertThat(response.data, `is`(emptyList()))
     }
 
     @Test
     fun `WHEN get mangas is called with a empty string manga name EXPECT list of data`() = runTest {
         val response =  api.getMangas("",0,10)
-        assertThat(response is MangaResponseDTO, `is`(true))
+        assertThat(response is MangaListResponseDTO, `is`(true))
         assertThat(response.data.size>1, `is`(true))
     }
 
     @Test
     fun `WHEN get mangas is called with a existing manga name EXPECT list of data`() = runTest {
         val response =  api.getMangas("Berserk",0,10)
-        assertThat(response is MangaResponseDTO, `is`(true))
+        assertThat(response is MangaListResponseDTO, `is`(true))
         assertThat(response.data.size>1, `is`(true))
     }
 

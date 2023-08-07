@@ -10,5 +10,6 @@ interface MangaRepository {
 
     fun getMangasByName(mangaName: String): Flow<PagingData<Manga>>
     suspend fun getChaptersByMangaId(mangaId: String): Response<List<Chapter>>
+    suspend fun getMangaInfo(mangaId: String): Response<Manga>
 
 }

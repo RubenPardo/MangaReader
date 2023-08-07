@@ -24,7 +24,7 @@ fun ErrorItemList(
     ) {
         Text(
             text = message,
-            maxLines = 1,
+            maxLines = 3,
             modifier = Modifier.weight(1f),
             //style = MaterialTheme.typography.h6,
             color = Color.Red

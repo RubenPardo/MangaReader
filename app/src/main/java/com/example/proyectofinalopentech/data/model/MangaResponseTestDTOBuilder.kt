@@ -32,7 +32,7 @@ class MangaResponseTestDTOBuilder {
         return this
     }
 
-    fun build(): MangaResponseDTO {
+    fun build(): MangaListResponseDTO {
         val list = mutableListOf<MangaDto>()
 
         for(i in 0 until numElements) {
@@ -44,7 +44,7 @@ class MangaResponseTestDTOBuilder {
                 .withFileName(fileName)
                 .build(i))
         }
-        return MangaResponseDTO(
+        return MangaListResponseDTO(
             data = list
         )
     }

@@ -1,11 +1,11 @@
 package com.example.proyectofinalopentech.data.model.mappers
 
-import com.example.proyectofinalopentech.data.model.MangaResponseDTO
+import com.example.proyectofinalopentech.data.model.MangaListResponseDTO
 import com.example.proyectofinalopentech.domain.model.Manga
 import com.example.proyectofinalopentech.common.Utils
 import com.example.proyectofinalopentech.data.model.MangaDto
 
-fun MangaResponseDTO.toDomain():List<Manga> {
+fun MangaListResponseDTO.toDomain():List<Manga> {
 
     return data.map { d -> d.toDomain() }.toList<Manga>()
 }

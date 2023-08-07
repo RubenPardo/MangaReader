@@ -36,5 +36,20 @@ class MangaRepositoryImpl (private val remoteDataSource: RemoteDataSource) : Man
         }
     }
 
+    override suspend fun getMangaInfo(mangaId: String): Response<Manga> {
+        return try {
+            val mangaDTO = remoteDataSource.getMangaById(mangaId).data
+            println(mangaDTO)
+            if(mangaDTO!=null){
+                Response.Success(mangaDTO.toDomain())
+            }else{
+                Response.Error("Unable to parse")
+            }
+
+        }catch (e: Exception){
+            Response.Error(e.message)
+        }
+    }
+
 
 }

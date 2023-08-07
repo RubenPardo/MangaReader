@@ -10,7 +10,7 @@ import org.koin.dsl.module
 val presentationModule = module{
     viewModel{ MangaListViewModel(get()) }
     viewModelOf(::MangaListViewModel)
-    viewModel{ MangaDetailsViewModel(get()) }
+    viewModel{ MangaDetailsViewModel(get(),get()) }
     viewModelOf(::MangaDetailsViewModel)
     //viewModel{ HeroDetailsViewModel(get(),get(), get(),get(),get()) }
     //viewModelOf(::HeroDetailsViewModel)*/

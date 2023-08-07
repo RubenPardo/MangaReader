@@ -1,6 +1,7 @@
 package com.example.proyectofinalopentech.data.api
 
 import com.example.proyectofinalopentech.data.model.ChapterResponseDTO
+import com.example.proyectofinalopentech.data.model.MangaListResponseDTO
 import com.example.proyectofinalopentech.data.model.MangaResponseDTO
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,11 +15,14 @@ interface MangaDexApi {
         @Query("title") mangaName: String,
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
-    ): MangaResponseDTO
+    ): MangaListResponseDTO
 
     @GET("manga/{id}/aggregate")
     suspend fun getChapters(
         @Path("id") id: String,
     ): ChapterResponseDTO
+
+    @GET("manga/{id}?includes[]=cover_art")
+    suspend fun getMangaById(@Path("id")mangaId: String): MangaResponseDTO
 
 }

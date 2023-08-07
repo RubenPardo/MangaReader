@@ -6,4 +6,6 @@
     <string name="my_mangas">My mangas</string>
     <string name="error_geting_chapters">Unable to get the chapters</string>
     <string name="volume">Volume</string>
+    <string name="save_manga">Save manga on favourites</string>
+    <string name="unsave_manga">Remove manga from favourite</string>
 </resources>
