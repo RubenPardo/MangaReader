@@ -80,6 +80,15 @@ val Typography.subtitleSmall: TextStyle
         fontWeight = FontWeight.Bold
     )
 
+val Typography.tagStyle: TextStyle
+    @Composable
+    get() = TextStyle(
+        fontSize = 16.sp,
+        fontFamily = FontFamily.Monospace,
+        color = Color.White,
+        fontWeight = FontWeight.Bold
+    )
+
 val Typography.subtitleLarge: TextStyle
     @Composable
     get() = TextStyle(

@@ -38,6 +38,7 @@ import com.example.proyectofinalopentech.domain.model.Manga
 import com.example.proyectofinalopentech.domain.model.builders.MangaBuilder
 import com.example.proyectofinalopentech.presentation.common.LoadingView
 import com.example.proyectofinalopentech.presentation.common.SaveIcon
+import com.example.proyectofinalopentech.presentation.common.TagList
 import com.example.proyectofinalopentech.presentation.mangalist.ErrorItemList
 import com.example.proyectofinalopentech.presentation.viewmodels.MangaDetailsUiState
 import com.example.proyectofinalopentech.presentation.viewmodels.MangaDetailsViewModel
@@ -116,6 +117,8 @@ fun BuildMangaInfo(mangaInfo: Manga) {
             .fillMaxWidth()) {
 
         Text(text = mangaInfo.title, style = MaterialTheme.typography.titleMangaItem)
+        Spacer(modifier = Modifier.height(16.dp))
+        TagList(tags = mangaInfo.tags)
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = mangaInfo.description, style = MaterialTheme.typography.subtitleSmall)
 
