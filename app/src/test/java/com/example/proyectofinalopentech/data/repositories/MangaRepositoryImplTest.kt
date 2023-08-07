@@ -2,13 +2,17 @@ package com.example.proyectofinalopentech.data.repositories
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.composeexample.testUtil.DefaultDispatcherRule
+import com.example.proyectofinalopentech.data.local.interfaces.LocalDataSource
+import com.example.proyectofinalopentech.data.local.model.MangaLocal
 import com.example.proyectofinalopentech.data.model.ChapterDTO
 import com.example.proyectofinalopentech.data.model.ChapterResponseDTO
 import com.example.proyectofinalopentech.data.model.MangaResponseTestDTOBuilder
 import com.example.proyectofinalopentech.data.model.VolumeDTO
 import com.example.proyectofinalopentech.data.model.mappers.toDomain
+import com.example.proyectofinalopentech.data.model.mappers.toLocal
 import com.example.proyectofinalopentech.data.remote.interfaces.RemoteDataSource
 import com.example.proyectofinalopentech.domain.model.Response
+import com.example.proyectofinalopentech.domain.model.builders.MangaBuilder
 import com.example.proyectofinalopentech.domain.repositoryInterfaces.MangaRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -20,6 +24,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.kotlin.any
 
 
 class MangaRepositoryImplTest{
@@ -34,12 +39,15 @@ class MangaRepositoryImplTest{
     @MockK(relaxed = true)
     private lateinit var remoteDataSource: RemoteDataSource
 
+    @MockK(relaxed = true)
+    private lateinit var localDataSource: LocalDataSource
+
     private lateinit var mangaRepository: MangaRepository
 
     @Before
     fun setup(){
         MockKAnnotations.init(this)
-        mangaRepository = MangaRepositoryImpl(remoteDataSource)
+        mangaRepository = MangaRepositoryImpl(remoteDataSource,localDataSource)
 
     }
 
@@ -92,6 +100,150 @@ class MangaRepositoryImplTest{
         coVerify (exactly = 1){ remoteDataSource.getChaptersByMangaId(mangaID) }
         assertEquals(response is Response.Success, true)
         assertEquals(response.data == expectResult, true)
+
+    }
+
+
+    @Test
+    fun `WHEN get fav manga local datasource return MangaLocal EXPECT repository return a Response Manga `() = runTest {
+
+        val numMangas = 10
+        val mangaID = "1"
+        val mangaTitle = "title"
+        val mangaUrl = "title"
+
+        val favLocalMangas = Array(numMangas){MangaLocal(mangaID,mangaTitle,mangaUrl)}.toList()
+
+        val expectResult = favLocalMangas.map { it.toDomain() }
+
+        coEvery { localDataSource.getFavMangas() } returns favLocalMangas
+
+        val response = mangaRepository.getFavMangas()
+
+        coVerify (exactly = 1){ localDataSource.getFavMangas() }
+        assertEquals(response is Response.Success, true)
+        assertEquals(response.data == expectResult, true)
+
+    }
+
+    @Test
+    fun `WHEN get fav manga local datasource throw error EXPECT repository return a Response Error `() = runTest {
+
+        val error = "error"
+
+        coEvery { localDataSource.getFavMangas() } throws  Exception(error)
+
+        val response = mangaRepository.getFavMangas()
+
+        coVerify (exactly = 1){ localDataSource.getFavMangas() }
+        assertEquals(response is Response.Error, true)
+        assertEquals(response.message == error, true)
+
+    }
+
+    @Test
+    fun `WHEN set fav manga local datasource returns greather than 1 EXPECT repository return a Response Succes `() = runTest {
+
+        val mangaToInsert = MangaBuilder().build()
+        val mangaToInsertLocal = mangaToInsert.toLocal()
+
+        coEvery { localDataSource.insertFavManga(mangaToInsertLocal) } returns 2L
+
+        val response = mangaRepository.saveFavManga(mangaToInsert)
+
+        coVerify (exactly = 1){ localDataSource.insertFavManga(mangaToInsertLocal) }
+        assertEquals(response is Response.Success, true)
+        assertEquals(response.data, true)
+
+    }
+
+    @Test
+    fun `WHEN set fav manga local datasource throw error EXPECT repository return a Response Error `() = runTest {
+
+        val error = "error"
+
+        val mangaToInsert = MangaBuilder().build()
+        val mangaToInsertLocal = mangaToInsert.toLocal()
+
+        coEvery { localDataSource.insertFavManga(mangaToInsertLocal) }  throws Exception(error)
+
+        val response = mangaRepository.saveFavManga(mangaToInsert)
+
+        coVerify (exactly = 1){ localDataSource.insertFavManga(mangaToInsertLocal) }
+        assertEquals(response is Response.Error, true)
+        assertEquals(response.message == error, true)
+
+    }
+
+    @Test
+    fun `WHEN remove fav manga local datasource returns nothing EXPECT repository return a Response Succes `() = runTest {
+
+        val mangaToRemove = MangaBuilder().build()
+        val mangaToRemoveLocal = mangaToRemove.toLocal()
+
+        coEvery { localDataSource.removeFavManga(mangaToRemoveLocal) } returns Unit
+
+        val response = mangaRepository.removeFavManga(mangaToRemove)
+
+        println(response)
+
+        coVerify (exactly = 1){ localDataSource.removeFavManga(mangaToRemoveLocal) }
+        assertEquals(response is Response.Success, true)
+        assertEquals(response.data, true)
+
+    }
+
+    @Test
+    fun `WHEN remove fav manga local datasource throw error EXPECT repository return a Response Error `() = runTest {
+
+        val error = "error"
+
+        val mangaToRemove = MangaBuilder().build()
+        val mangaToRemoveLocal = mangaToRemove.toLocal()
+
+        coEvery { localDataSource.removeFavManga(mangaToRemoveLocal) }  throws Exception(error)
+
+        val response = mangaRepository.removeFavManga(mangaToRemove)
+
+        coVerify (exactly = 1){ localDataSource.removeFavManga(mangaToRemoveLocal) }
+        assertEquals(response is Response.Error, true)
+        assertEquals(response.message == error, true)
+
+    }
+
+    @Test
+    fun `WHEN is fav manga local datasource return ToF EXPECT repository return a Response Succes `() = runTest {
+
+        val error = "error"
+
+        val manga = MangaBuilder().build()
+        val mangaLocal = manga.toLocal()
+
+        coEvery { localDataSource.isFavManga(mangaLocal.id) }  returns true
+
+        val response = mangaRepository.isFavManga(manga.id)
+
+        coVerify (exactly = 1){ localDataSource.isFavManga(mangaLocal.id) }
+        assertEquals(response is Response.Success, true)
+        assertEquals(response.data == true, true)
+
+    }
+
+    @Test
+    fun `WHEN is fav manga local datasource throw Error EXPECT repository return a Response Error `() = runTest {
+
+        val error = "error"
+
+        val manga = MangaBuilder().build()
+        val mangaLocal = manga.toLocal()
+
+        coEvery { localDataSource.isFavManga(mangaLocal.id) }  throws  Exception(error)
+
+        val response = mangaRepository.isFavManga(manga.id)
+
+        coVerify (exactly = 1){ localDataSource.isFavManga(mangaLocal.id) }
+        assertEquals(response is Response.Error, true)
+        assertEquals(response.message == error, true)
 
     }
 

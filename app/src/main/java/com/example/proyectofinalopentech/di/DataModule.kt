@@ -1,6 +1,12 @@
 package com.example.proyectofinalopentech.di
 
+import android.content.Context
+import androidx.room.Room
 import com.example.proyectofinalopentech.data.api.MangaDexApi
+import com.example.proyectofinalopentech.data.local.implementations.LocalDataSourceRoomImpl
+import com.example.proyectofinalopentech.data.local.interfaces.LocalDataSource
+import com.example.proyectofinalopentech.data.local.room.MangaDatabase
+import com.example.proyectofinalopentech.data.local.room.MangaFavDao
 import com.example.proyectofinalopentech.data.model.ChapterResponseDTOAdapterFactory
 import com.example.proyectofinalopentech.data.remote.implementation.RemoteDataSourceRetrofit
 import com.example.proyectofinalopentech.data.remote.interfaces.RemoteDataSource
@@ -17,25 +23,20 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 val dataModule = module{
 
     single<RemoteDataSource> { RemoteDataSourceRetrofit(get()) }
-    single <MangaRepository>{ MangaRepositoryImpl(get())  }
-    /*single <DragonBallRepository>{ DragonBallRepositoryImpl(get(), get())  }
-
-    single <SharedPreferencesService>{ SharedPreferencesServiceImpl()  }
-    single <AuthService>{ AuthServiceImpl()  }
-    single <RemoteDataSource>{ RemoteDataSourceRetrofitImpl(get())  }
-    single <LocalDataSource>{ LocalDataSourceRoomImpl(get())  }*/
+    single <MangaRepository>{ MangaRepositoryImpl(get(),get())  }
+    single <LocalDataSource>{ LocalDataSourceRoomImpl(get())  }
 
     single<MangaDexApi>{
         getMangaDexApi(get())
     }
 
-   /* single {
+    single {
         getDatabase(get())
     }
 
     single {
-        providesHeroDao(get())
-    }*/
+        providesMangaFavDao(get())
+    }
 
 
     single {
@@ -65,11 +66,11 @@ val dataModule = module{
 
 private fun getMangaDexApi(retrofit: Retrofit) = retrofit.create(MangaDexApi::class.java)
 
-/*private fun getDatabase(context: Context) : HeroDatabase =
+private fun getDatabase(context: Context) : MangaDatabase =
     Room.databaseBuilder(
         context,
-        HeroDatabase::class.java, "superhero-db"
+        MangaDatabase::class.java, "manga-fav-db"
     ).build()
 
-private fun providesHeroDao(db: HeroDatabase) : HeroDao =
-    db.superHeroDao()*/
+private fun providesMangaFavDao(db: MangaDatabase) : MangaFavDao =
+    db.mangaFavDao()

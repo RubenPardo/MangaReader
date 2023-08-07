@@ -14,4 +14,5 @@ data class Manga(
     val status: String,
     val fullImageUrl:String,
     val smallImageUrl:String,
+    var isFav:Boolean = false
 )

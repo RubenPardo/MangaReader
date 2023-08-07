@@ -3,6 +3,7 @@ package com.example.proyectofinalopentech.data.model.mappers
 import com.example.proyectofinalopentech.data.model.MangaListResponseDTO
 import com.example.proyectofinalopentech.domain.model.Manga
 import com.example.proyectofinalopentech.common.Utils
+import com.example.proyectofinalopentech.data.local.model.MangaLocal
 import com.example.proyectofinalopentech.data.model.MangaDto
 
 fun MangaListResponseDTO.toDomain():List<Manga> {
@@ -37,3 +38,24 @@ fun MangaDto.toDomain(): Manga{
         "https://uploads.mangadex.org/covers/${this.id}/$coverArt.256.jpg"
     )
 }
+
+fun MangaLocal.toDomain():Manga =
+    Manga(
+        id = id,
+        title = title,
+        description = "",
+        tags = emptyList(),
+        lastUpdate = null,
+        lastChapter = "",
+        lastVolume = "",
+        smallImageUrl = smallUrl,
+        fullImageUrl = "",
+        state = "",
+        status = "",
+    )
+fun Manga.toLocal():MangaLocal =
+    MangaLocal(
+        id = id,
+        title = title,
+        smallUrl = smallImageUrl
+    )
