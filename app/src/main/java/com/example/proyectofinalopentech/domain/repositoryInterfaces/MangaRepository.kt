@@ -2,6 +2,7 @@ package com.example.proyectofinalopentech.domain.repositoryInterfaces
 
 import androidx.paging.PagingData
 import com.example.proyectofinalopentech.domain.model.Chapter
+import com.example.proyectofinalopentech.domain.model.ChapterDetail
 import com.example.proyectofinalopentech.domain.model.Manga
 import com.example.proyectofinalopentech.domain.model.Response
 import kotlinx.coroutines.flow.Flow
@@ -17,4 +18,5 @@ interface MangaRepository {
     suspend fun removeFavManga(manga: Manga): Response<Boolean>
 
     suspend fun isFavManga(mangaId: String): Response<Boolean>
+    suspend fun getChapterDetail(chapterId: String): Response<ChapterDetail>
 }

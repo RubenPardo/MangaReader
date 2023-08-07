@@ -11,6 +11,7 @@ import com.example.proyectofinalopentech.data.remote.MangaPagingSource
 import com.example.proyectofinalopentech.data.remote.NETWORK_PAGE_SIZE
 import com.example.proyectofinalopentech.data.remote.interfaces.RemoteDataSource
 import com.example.proyectofinalopentech.domain.model.Chapter
+import com.example.proyectofinalopentech.domain.model.ChapterDetail
 import com.example.proyectofinalopentech.domain.model.Manga
 import com.example.proyectofinalopentech.domain.model.Response
 import com.example.proyectofinalopentech.domain.repositoryInterfaces.MangaRepository
@@ -93,6 +94,14 @@ class MangaRepositoryImpl (
     override suspend fun isFavManga(mangaId: String): Response<Boolean> {
         return try {
             Response.Success(localDataSource.isFavManga(mangaId))
+        }catch (e: Exception){
+            Response.Error(e.message)
+        }
+    }
+
+    override suspend fun getChapterDetail(chapterId: String): Response<ChapterDetail> {
+        return try {
+            Response.Success(remoteDataSource.getChapterDetail(chapterId).toDomain())
         }catch (e: Exception){
             Response.Error(e.message)
         }

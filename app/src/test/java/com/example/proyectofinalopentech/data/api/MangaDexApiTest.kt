@@ -2,6 +2,7 @@ package com.example.proyectofinalopentech.data.api
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.composeexample.testUtil.DefaultDispatcherRule
+import com.example.proyectofinalopentech.data.model.ChapterDetailResponseDTO
 import com.example.proyectofinalopentech.data.model.MangaListResponseDTO
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -61,6 +62,12 @@ class MangaDexApiTest {
     fun `WHEN get chapters is called with empty string THROW 404 Http exception `() = runTest {
         api.getChapters("")
         assert(false)
+    }
+
+    @Test(expected = HttpException::class)
+    fun `WHEN get chapter detail is called with existing id EXPECT a ChapterDetailResponseDTO`() = runTest {
+        val res: ChapterDetailResponseDTO = api.getChapterDetail("19b31a07-5669-401f-be72-f2f84e68ce00")
+        assert(true)
     }
 
     /*@Test()

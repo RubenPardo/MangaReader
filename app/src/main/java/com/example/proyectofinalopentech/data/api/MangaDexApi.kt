@@ -1,5 +1,6 @@
 package com.example.proyectofinalopentech.data.api
 
+import com.example.proyectofinalopentech.data.model.ChapterDetailResponseDTO
 import com.example.proyectofinalopentech.data.model.ChapterResponseDTO
 import com.example.proyectofinalopentech.data.model.MangaListResponseDTO
 import com.example.proyectofinalopentech.data.model.MangaResponseDTO
@@ -24,5 +25,8 @@ interface MangaDexApi {
 
     @GET("manga/{id}?includes[]=cover_art")
     suspend fun getMangaById(@Path("id")mangaId: String): MangaResponseDTO
+
+    @GET("at-home/server/")
+    suspend fun getChapterDetail(@Query("id")chapterId: String): ChapterDetailResponseDTO
 
 }

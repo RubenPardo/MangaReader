@@ -5,6 +5,8 @@ import com.example.composeexample.testUtil.DefaultDispatcherRule
 import com.example.proyectofinalopentech.data.local.interfaces.LocalDataSource
 import com.example.proyectofinalopentech.data.local.model.MangaLocal
 import com.example.proyectofinalopentech.data.model.ChapterDTO
+import com.example.proyectofinalopentech.data.model.ChapterDetailDTO
+import com.example.proyectofinalopentech.data.model.ChapterDetailResponseDTO
 import com.example.proyectofinalopentech.data.model.ChapterResponseDTO
 import com.example.proyectofinalopentech.data.model.MangaResponseTestDTOBuilder
 import com.example.proyectofinalopentech.data.model.VolumeDTO
@@ -242,6 +244,59 @@ class MangaRepositoryImplTest{
         val response = mangaRepository.isFavManga(manga.id)
 
         coVerify (exactly = 1){ localDataSource.isFavManga(mangaLocal.id) }
+        assertEquals(response is Response.Error, true)
+        assertEquals(response.message == error, true)
+
+    }
+
+    @Test
+    fun `WHEN get chapter detail remote datasource return ChapterDetailDto EXPECT repository return a Response Success with a DO `() = runTest {
+
+        val chapterId = "1"
+
+        val numPages = 5
+        val chapterDetailDto = ChapterDetailResponseDTO("","baseURl",
+            ChapterDetailDTO(
+                "hash",
+                Array(numPages){it.toString()}.toList(),
+                Array(numPages){it.toString()}.toList(),
+            )
+        )
+
+        val expectedChapterDetail = chapterDetailDto.toDomain()
+
+        coEvery { remoteDataSource.getChapterDetail(chapterId) }  returns chapterDetailDto
+
+        val response = mangaRepository.getChapterDetail(chapterId)
+
+        coVerify (exactly = 1){ remoteDataSource.getChapterDetail(chapterId)}
+        assertEquals(response is Response.Success, true)
+        assertEquals(response.data == expectedChapterDetail, true)
+
+    }
+
+    @Test
+    fun `WHEN get chapter detail remote datasource throw Exception EXPECT repository return a Response Error `() = runTest {
+
+        val chapterId = "1"
+        val error = "1"
+
+        val numPages = 5
+        val chapterDetailDto = ChapterDetailResponseDTO("","baseURl",
+            ChapterDetailDTO(
+                "hash",
+                Array(numPages){it.toString()}.toList(),
+                Array(numPages){it.toString()}.toList(),
+            )
+        )
+
+
+        coEvery { remoteDataSource.getChapterDetail(chapterId) }  throws Exception(error)
+
+        val response = mangaRepository.getChapterDetail(chapterId)
+
+
+        coVerify (exactly = 1){  remoteDataSource.getChapterDetail(chapterId) }
         assertEquals(response is Response.Error, true)
         assertEquals(response.message == error, true)
 
