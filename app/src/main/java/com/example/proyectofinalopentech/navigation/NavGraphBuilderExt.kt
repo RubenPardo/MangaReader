@@ -23,9 +23,9 @@ fun NavGraphBuilder.addSavedPanelsScreen(navController: NavHostController) {
     }
 }
 
-fun NavGraphBuilder.addMyMangasScreen(navController: NavHostController) {
+fun NavGraphBuilder.addMyMangasScreen(navController: NavHostController,scrollState: LazyListState) {
     composable(Screen.MyMangasScreen.route){
-        MyMangasScreen()
+        MyMangasScreen(scrollState) { navController.navigate(Screen.MangaDetails.route + "/$it") }
     }
 }
 
