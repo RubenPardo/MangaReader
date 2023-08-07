@@ -1,5 +1,6 @@
 package com.example.proyectofinalopentech.di
 
+import com.example.proyectofinalopentech.domain.usecases.GetChapterDetailUseCase
 import com.example.proyectofinalopentech.domain.usecases.GetFavMangasUseCase
 import com.example.proyectofinalopentech.domain.usecases.GetMangaChaptersByIdUseCase
 import com.example.proyectofinalopentech.domain.usecases.GetMangaInfoUseCase
@@ -14,5 +15,6 @@ val domainModel = module{
    factory {GetMangaInfoUseCase(get())}
    factory {SetMangaFavUseCase(get())}
    factory {GetFavMangasUseCase(get())}
+   factory {GetChapterDetailUseCase(get())}
 
 }

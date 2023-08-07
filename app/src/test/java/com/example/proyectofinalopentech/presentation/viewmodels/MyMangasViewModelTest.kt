@@ -44,7 +44,7 @@ class MyMangasViewModelTest{
     @Before
     fun setup(){
         MockKAnnotations.init(this)
-        myMangasViewModel = MyMangasViewModel(getFavMangasUseCase,setMangaFavUseCase)
+        myMangasViewModel = MyMangasViewModel(getFavMangasUseCase)
 
     }
 
