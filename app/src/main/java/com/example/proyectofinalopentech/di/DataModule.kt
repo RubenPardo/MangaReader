@@ -7,6 +7,7 @@ import com.example.proyectofinalopentech.data.local.implementations.LocalDataSou
 import com.example.proyectofinalopentech.data.local.interfaces.LocalDataSource
 import com.example.proyectofinalopentech.data.local.room.MangaDatabase
 import com.example.proyectofinalopentech.data.local.room.MangaFavDao
+import com.example.proyectofinalopentech.data.local.room.MangaPagesFavDao
 import com.example.proyectofinalopentech.data.model.ChapterResponseDTOAdapterFactory
 import com.example.proyectofinalopentech.data.remote.implementation.RemoteDataSourceRetrofit
 import com.example.proyectofinalopentech.data.remote.interfaces.RemoteDataSource
@@ -24,7 +25,7 @@ val dataModule = module{
 
     single<RemoteDataSource> { RemoteDataSourceRetrofit(get()) }
     single <MangaRepository>{ MangaRepositoryImpl(get(),get())  }
-    single <LocalDataSource>{ LocalDataSourceRoomImpl(get())  }
+    single <LocalDataSource>{ LocalDataSourceRoomImpl(get(),get())  }
 
     single<MangaDexApi>{
         getMangaDexApi(get())
@@ -36,6 +37,10 @@ val dataModule = module{
 
     single {
         providesMangaFavDao(get())
+    }
+
+    single {
+        providesMangaPageFavDao(get())
     }
 
 
@@ -74,3 +79,6 @@ private fun getDatabase(context: Context) : MangaDatabase =
 
 private fun providesMangaFavDao(db: MangaDatabase) : MangaFavDao =
     db.mangaFavDao()
+
+private fun providesMangaPageFavDao(db: MangaDatabase) : MangaPagesFavDao =
+    db.mangaPageFavDao()

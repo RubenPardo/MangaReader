@@ -3,6 +3,7 @@ package com.example.proyectofinalopentech.domain.usecases
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.composeexample.testUtil.DefaultDispatcherRule
 import com.example.proyectofinalopentech.domain.model.ChapterDetail
+import com.example.proyectofinalopentech.domain.model.MangaPage
 import com.example.proyectofinalopentech.domain.model.Response
 import com.example.proyectofinalopentech.domain.model.builders.MangaBuilder
 import com.example.proyectofinalopentech.domain.repositoryInterfaces.MangaRepository
@@ -39,16 +40,21 @@ class GetChapterDetailUseCaseTest{
      fun`WHEN manga repository returns aaa success  Expect return a success`() = runTest {
 
          val chapterId = "1"
-         val chapterRes = ChapterDetail(emptyList())
+         val numPages = 5
+         val mangaPage = MangaPage("","",false)
+         val chapterRes = ChapterDetail(Array(numPages){mangaPage}.toList())
+         val chapterResExpected = ChapterDetail(Array(numPages){MangaPage("","",true)}.toList())
 
 
          coEvery { mangaRepository.getChapterDetail(chapterId) } returns Response.Success(chapterRes)
+         coEvery { mangaRepository.isFavMangaPage(mangaPage) } returns Response.Success(true)
 
          val response = getChapterDetailUseCase(chapterId)
 
          coVerify (exactly = 1) { mangaRepository.getChapterDetail(chapterId) }
+         coVerify (exactly = numPages) { mangaRepository.isFavMangaPage(mangaPage) }
          TestCase.assertEquals(response is Response.Success, true)
-         TestCase.assertEquals(response.data == chapterRes, true)
+         TestCase.assertEquals(response.data == chapterResExpected, true)
 
      }
 

@@ -16,7 +16,7 @@ val presentationModule = module{
     viewModelOf(::MangaDetailsViewModel)
     viewModel{ MyMangasViewModel(get()) }
     viewModelOf(::MyMangasViewModel)
-    viewModel{ ChapterReaderViewModel(get()) }
+    viewModel{ ChapterReaderViewModel(get(),get()) }
     viewModelOf(::ChapterReaderViewModel)
     //viewModel{ HeroDetailsViewModel(get(),get(), get(),get(),get()) }
     //viewModelOf(::HeroDetailsViewModel)*/

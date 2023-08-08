@@ -6,8 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.proyectofinalopentech.R
 import com.example.proyectofinalopentech.domain.model.ChapterDetail
 import com.example.proyectofinalopentech.domain.model.Manga
+import com.example.proyectofinalopentech.domain.model.MangaPage
 import com.example.proyectofinalopentech.domain.model.Response
 import com.example.proyectofinalopentech.domain.usecases.GetChapterDetailUseCase
+import com.example.proyectofinalopentech.domain.usecases.SetMangaPageFavUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,6 +25,7 @@ data class ChapterReaderUiState(
 
 class ChapterReaderViewModel(
     private val getChapterDetailUseCase: GetChapterDetailUseCase,
+    private val setMangaPageFavUseCase: SetMangaPageFavUseCase,
 ): ViewModel() {
 
     private var currentState = ChapterReaderUiState()
@@ -37,6 +40,31 @@ class ChapterReaderViewModel(
             is Response.Success -> {
                 emitNewState(currentState.copy(isLoading = false, isError = false, chapterDetail = res.data))
             }
+        }
+    }
+
+    fun setFav(mangaPageIndex: Int) {
+        viewModelScope.launch (Dispatchers.IO){
+            currentState.chapterDetail?.let {chapterDetail ->
+                val currentPage = chapterDetail.listPageUrls[mangaPageIndex]
+
+                when(  val response = setMangaPageFavUseCase(currentPage)){
+                    // error
+                    is Response.Error -> {
+
+                    }
+                    // content
+                    is Response.Success ->{
+                        val newPage = chapterDetail.listPageUrls[mangaPageIndex].copy(isFav = response.data?:false)
+                        val newList = chapterDetail.listPageUrls.toMutableList()
+                        newList[mangaPageIndex] = newPage
+                        emitNewState(currentState.copy(chapterDetail = chapterDetail.copy(listPageUrls = newList)))
+                    }
+
+                }
+            }
+
+
         }
     }
 

@@ -13,6 +13,7 @@ import com.example.proyectofinalopentech.data.remote.interfaces.RemoteDataSource
 import com.example.proyectofinalopentech.domain.model.Chapter
 import com.example.proyectofinalopentech.domain.model.ChapterDetail
 import com.example.proyectofinalopentech.domain.model.Manga
+import com.example.proyectofinalopentech.domain.model.MangaPage
 import com.example.proyectofinalopentech.domain.model.Response
 import com.example.proyectofinalopentech.domain.repositoryInterfaces.MangaRepository
 import kotlinx.coroutines.flow.Flow
@@ -94,6 +95,49 @@ class MangaRepositoryImpl (
     override suspend fun isFavManga(mangaId: String): Response<Boolean> {
         return try {
             Response.Success(localDataSource.isFavManga(mangaId))
+        }catch (e: Exception){
+            Response.Error(e.message)
+        }
+    }
+
+    override suspend fun getFavMangaPages(): Response<List<MangaPage>> {
+        return try {
+            val mangaPagesDTO = localDataSource.getAllMangaPagesFav()
+            Response.Success(mangaPagesDTO.map { it.toDomain() })
+
+        }catch (e: Exception){
+            Response.Error(e.message)
+        }
+    }
+
+    override suspend fun saveMangaPage(page: MangaPage): Response<Boolean> {
+        return try {
+            val res = localDataSource.insertMangaPage(page.toLocal())
+            if(res>0L){
+                Response.Success(true)
+            }else{
+                Response.Error("")
+            }
+
+
+        }catch (e: Exception){
+            Response.Error(e.message)
+        }
+    }
+
+    override suspend fun removeMangaPage(page: MangaPage): Response<Boolean> {
+        return try {
+            localDataSource.removeMangaPage(page.toLocal())
+            Response.Success(true)
+
+        }catch (e: Exception){
+            Response.Error(e.message)
+        }
+    }
+
+    override suspend fun isFavMangaPage(page: MangaPage): Response<Boolean> {
+        return try {
+            Response.Success(localDataSource.isFavMangaPage(page.toLocal().url))
         }catch (e: Exception){
             Response.Error(e.message)
         }

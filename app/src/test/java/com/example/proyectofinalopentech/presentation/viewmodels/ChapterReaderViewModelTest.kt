@@ -9,6 +9,7 @@ import com.example.proyectofinalopentech.domain.model.builders.MangaBuilder
 import com.example.proyectofinalopentech.domain.usecases.GetChapterDetailUseCase
 import com.example.proyectofinalopentech.domain.usecases.GetFavMangasUseCase
 import com.example.proyectofinalopentech.domain.usecases.SetMangaFavUseCase
+import com.example.proyectofinalopentech.domain.usecases.SetMangaPageFavUseCase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -30,7 +31,7 @@ class ChapterReaderViewModelTest{
     private lateinit var getChapterDetailUseCase: GetChapterDetailUseCase
 
     @MockK(relaxed = true)
-    private lateinit var setMangaFavUseCase: SetMangaFavUseCase
+    private lateinit var setMangaPageFavUseCase: SetMangaPageFavUseCase
 
     @MockK
     lateinit var chapterReaderViewModel: ChapterReaderViewModel
@@ -46,7 +47,7 @@ class ChapterReaderViewModelTest{
     @Before
     fun setup(){
         MockKAnnotations.init(this)
-        chapterReaderViewModel = ChapterReaderViewModel(getChapterDetailUseCase)
+        chapterReaderViewModel = ChapterReaderViewModel(getChapterDetailUseCase,setMangaPageFavUseCase)
 
     }
 

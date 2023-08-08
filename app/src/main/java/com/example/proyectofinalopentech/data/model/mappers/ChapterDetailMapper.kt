@@ -1,5 +1,6 @@
 package com.example.proyectofinalopentech.data.model.mappers
 
+import com.example.proyectofinalopentech.data.local.model.MangaPageLocal
 import com.example.proyectofinalopentech.data.model.ChapterDetailDTO
 import com.example.proyectofinalopentech.data.model.ChapterDetailResponseDTO
 import com.example.proyectofinalopentech.domain.model.ChapterDetail
@@ -15,3 +16,6 @@ fun ChapterDetailResponseDTO.toDomain():ChapterDetail {
         )
     }?.toList() ?: emptyList())
 }
+
+fun MangaPageLocal.toDomain() = MangaPage(pageLR = url, pageHR = "")
+fun MangaPage.toLocal() = MangaPageLocal(url = pageLR)

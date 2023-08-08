@@ -97,9 +97,9 @@ fun ChapterDetailScreen(
                     maxPages = pagerState.pageCount,
                     currentPage = pagerState.currentPage+1,
                     readerMode = readerMode,
-                    isFav = isFav,
+                    isFav = chapterDetail.listPageUrls[pagerState.currentPage].isFav,
                     changeReaderModeCallback = {readerMode = !readerMode},
-                    setFavCallback = {isFav = !isFav},
+                    setFavCallback = {chapterReaderViewModel.setFav(pagerState.currentPage)},
                     goBack = goBack
                 )
 
