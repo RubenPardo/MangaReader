@@ -1,6 +1,7 @@
 package com.example.proyectofinalopentech.di
 
 
+import com.example.proyectofinalopentech.presentation.viewmodels.ChapterReaderViewModel
 import com.example.proyectofinalopentech.presentation.viewmodels.MangaDetailsViewModel
 import com.example.proyectofinalopentech.presentation.viewmodels.MangaListViewModel
 import com.example.proyectofinalopentech.presentation.viewmodels.MyMangasViewModel
@@ -15,6 +16,8 @@ val presentationModule = module{
     viewModelOf(::MangaDetailsViewModel)
     viewModel{ MyMangasViewModel(get()) }
     viewModelOf(::MyMangasViewModel)
+    viewModel{ ChapterReaderViewModel(get()) }
+    viewModelOf(::ChapterReaderViewModel)
     //viewModel{ HeroDetailsViewModel(get(),get(), get(),get(),get()) }
     //viewModelOf(::HeroDetailsViewModel)*/
 }

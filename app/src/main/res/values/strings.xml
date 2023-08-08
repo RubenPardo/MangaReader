@@ -8,4 +8,9 @@
     <string name="volume">Volume</string>
     <string name="save_manga">Save manga on favourites</string>
     <string name="unsave_manga">Remove manga from favourite</string>
+    <string name="page">Page number </string>
+    <string name="reader_mode_vertical">Vertical reading mode, change to Horizontal</string>
+    <string name="reader_mode_horizontal">Horizontal reading mode, change to Vertical</string>
+    <string name="go_back_to_manga_details">Go back to manga details</string>
+    <string name="unable_to_load_chapter">Unable to load chapter. Try Again.</string>
 </resources>

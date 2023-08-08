@@ -26,7 +26,7 @@ interface MangaDexApi {
     @GET("manga/{id}?includes[]=cover_art")
     suspend fun getMangaById(@Path("id")mangaId: String): MangaResponseDTO
 
-    @GET("at-home/server/")
-    suspend fun getChapterDetail(@Query("id")chapterId: String): ChapterDetailResponseDTO
+    @GET("at-home/server/{id}")
+    suspend fun getChapterDetail(@Path("id")chapterId: String): ChapterDetailResponseDTO
 
 }

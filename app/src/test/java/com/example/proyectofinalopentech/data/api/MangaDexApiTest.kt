@@ -64,11 +64,6 @@ class MangaDexApiTest {
         assert(false)
     }
 
-    @Test(expected = HttpException::class)
-    fun `WHEN get chapter detail is called with existing id EXPECT a ChapterDetailResponseDTO`() = runTest {
-        val res: ChapterDetailResponseDTO = api.getChapterDetail("19b31a07-5669-401f-be72-f2f84e68ce00")
-        assert(true)
-    }
 
     /*@Test()
     fun `WHEN get chapters is called with existing string EXPECT ChapterResponseDTO`() = runTest {

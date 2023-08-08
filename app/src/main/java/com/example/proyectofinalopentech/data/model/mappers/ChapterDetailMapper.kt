@@ -6,6 +6,7 @@ import com.example.proyectofinalopentech.domain.model.ChapterDetail
 import com.example.proyectofinalopentech.domain.model.MangaPage
 
 fun ChapterDetailResponseDTO.toDomain():ChapterDetail {
+    if(result == "error") throw Exception()
     // https://uploads.mangadex.org/data-saver/hash/:imagen.jpg
     return ChapterDetail(chapter?.data?.mapIndexed { index, url ->
         MangaPage(

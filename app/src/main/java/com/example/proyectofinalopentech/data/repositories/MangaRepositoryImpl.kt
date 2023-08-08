@@ -101,7 +101,9 @@ class MangaRepositoryImpl (
 
     override suspend fun getChapterDetail(chapterId: String): Response<ChapterDetail> {
         return try {
-            Response.Success(remoteDataSource.getChapterDetail(chapterId).toDomain())
+            val res = remoteDataSource.getChapterDetail(chapterId)
+            println(res.result)
+            Response.Success(res.toDomain())
         }catch (e: Exception){
             Response.Error(e.message)
         }

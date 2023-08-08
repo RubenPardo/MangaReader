@@ -108,6 +108,7 @@ dependencies {
 
     // coil
     implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation "net.engawapg.lib:zoomable:1.5.0-beta1"
 
     // Networking
     implementation "com.squareup.retrofit2:retrofit:${ retrofitVersion }"

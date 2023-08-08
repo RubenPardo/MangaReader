@@ -44,6 +44,7 @@ class MainActivity(): ComponentActivity() {
 
                 val navController = rememberNavController()
                 val scrollState = rememberLazyListState()
+                var showTopBar  = scrollState.isScrollingUp()
 
                 // Subscribe to navBackStackEntry, required to get current route
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -54,9 +55,15 @@ class MainActivity(): ComponentActivity() {
                         bottomBarState.value = false
                         topBarStateShowBack.value = true
                     }
+                    Screen.ChapterDetails.route+"/{chapter_id}" -> {
+                        bottomBarState.value = false
+                        topBarStateShowBack.value = false
+                        showTopBar = false
+                    }
                     else -> {
                         bottomBarState.value = true
                         topBarStateShowBack.value = false
+
                     }
                 }
 
@@ -67,7 +74,7 @@ class MainActivity(): ComponentActivity() {
                         scrollState.isScrollingUp(),
                         navController
                     )},
-                    topBar = { BuildTopBar(titleTopBar,topBarStateShowBack.value,scrollState.isScrollingUp(),navController) },
+                    topBar = { BuildTopBar(titleTopBar,topBarStateShowBack.value, showTopBar,navController) },
                 ){ innerPadding ->
                     Box {
                         Box(modifier = Modifier.padding(top = innerPadding.calculateTopPadding())){

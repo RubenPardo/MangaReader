@@ -1,5 +1,6 @@
 package com.example.proyectofinalopentech.presentation.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -50,7 +51,7 @@ import org.koin.androidx.compose.koinViewModel
 fun MangaDetails(
     mangaId: String,
     mangaDetailsViewModel: MangaDetailsViewModel = koinViewModel(),
-    goBack: (() -> Unit)?
+    goToChapterDetail: (chapterId:String) -> Unit
 ) {
     LaunchedEffect(true){
         // init view model
@@ -60,12 +61,7 @@ fun MangaDetails(
     
     val uiSate = mangaDetailsViewModel.uiState.collectAsState().value
 
-    Prueba(uiSate,mangaDetailsViewModel, mangaId)
 
-}
-
-@Composable
-fun Prueba(uiSate: MangaDetailsUiState, mangaDetailsViewModel: MangaDetailsViewModel?, mangaId: String ="") {
     var currentTab by remember { mutableStateOf(0) }
     val tabs = listOf("Info", "Chapters")
     LazyColumn(
@@ -84,13 +80,18 @@ fun Prueba(uiSate: MangaDetailsUiState, mangaDetailsViewModel: MangaDetailsViewM
                         )
                     }
                 }
-               when(currentTab){
-                   0 ->  BuildInfo(uiState = uiSate, retryCallback = { mangaDetailsViewModel?.getMangaInfo(mangaId) })
-                   1 ->  BuildChapters(uiState = uiSate, retryCallback = {mangaDetailsViewModel?.getChapter(mangaId)})
-               }
+                when(currentTab){
+                    0 ->  BuildInfo(uiState = uiSate,
+                        retryCallback = { mangaDetailsViewModel.getMangaInfo(mangaId) })
+                    1 ->  BuildChapters(uiState = uiSate,
+                        retryCallback = { mangaDetailsViewModel.getChapter(mangaId) },
+                        goToChapterDetail = goToChapterDetail
+                    )
+                }
             }
         }
     }
+
 }
 
 @Composable
@@ -157,7 +158,11 @@ fun BuildHeader(mangaInfo: Manga, viewModel: MangaDetailsViewModel?) {
 
 
 @Composable
-fun BuildChapters(uiState: MangaDetailsUiState, retryCallback: ()->Unit){
+fun BuildChapters(
+    uiState: MangaDetailsUiState,
+    retryCallback: () -> Unit,
+    goToChapterDetail: (chapterId: String) -> Unit
+){
 
     if(uiState.isLoadingChapters){
         LoadingView(modifier = Modifier.fillMaxSize())
@@ -169,20 +174,20 @@ fun BuildChapters(uiState: MangaDetailsUiState, retryCallback: ()->Unit){
         }
     }else{
 
-        BuildListChapters(uiState.volumes)
+        BuildListChapters(uiState.volumes,goToChapterDetail)
 
     }
 }
 
 @Composable
-fun BuildListChapters(chapters: List<Chapter>) {
+fun BuildListChapters(chapters: List<Chapter>, goToChapterDetail: (chapterId: String) -> Unit) {
     chapters.forEachIndexed{index,chapter ->
         Column (
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp),
         ){
-            BuildChapter(chapter)
+            BuildChapter(chapter,goToChapterDetail)
             if(index < chapters.size-1){
                 Spacer(modifier = Modifier.height(24.dp))
                 Divider(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.4f))
@@ -195,19 +200,11 @@ fun BuildListChapters(chapters: List<Chapter>) {
 }
 
 @Composable
-fun BuildChapter(it: Chapter) {
-    Text("CHAPTER ${it.name}", modifier = Modifier.padding(start = 12.dp))
+fun BuildChapter(it: Chapter, goToChapterDetail: (chapterId: String) -> Unit) {
+    Text("CHAPTER ${it.name}",
+        modifier = Modifier.padding(start = 12.dp)
+            .fillMaxWidth()
+            .clickable { goToChapterDetail.invoke(it.id) }
+    )
 }
 
-
-@Preview
-@Composable
-fun Preview(){
-    Prueba(uiSate = MangaDetailsUiState(
-        isLoadingChapters = false,
-        isLoadingMangaInfo = false,
-        mangaInfo = MangaBuilder().build(),
-        volumes = Array(60){Chapter(it.toString(),"")}.toList()
-    ),
-        mangaDetailsViewModel = null )
-}

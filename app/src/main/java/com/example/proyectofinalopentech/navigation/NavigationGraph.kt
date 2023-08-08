@@ -15,5 +15,6 @@ fun NavigationGraph(navController: NavHostController, scrollState: LazyListState
         addSavedPanelsScreen(navController)
         addMyMangasScreen(navController,scrollState)
         addMangaDetails(navController)
+        addChapterDetails(navController)
     }
 }
