@@ -5,7 +5,9 @@ data class ChapterDetail(
 )
 
 data class MangaPage(
+    val chapterId:String,
     val pageHR:String,
     val pageLR:String,
     val isFav:Boolean = false,
+    val page:Int,
 )

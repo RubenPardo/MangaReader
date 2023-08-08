@@ -55,7 +55,7 @@ class MainActivity(): ComponentActivity() {
                         bottomBarState.value = false
                         topBarStateShowBack.value = true
                     }
-                    Screen.ChapterDetails.route+"/{chapter_id}" -> {
+                    Screen.ChapterDetails.route+"/{chapter_id}/{page}" -> {
                         bottomBarState.value = false
                         topBarStateShowBack.value = false
                         showTopBar = false

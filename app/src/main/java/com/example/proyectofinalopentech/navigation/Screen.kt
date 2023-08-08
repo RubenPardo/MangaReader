@@ -31,6 +31,9 @@ sealed class Screen(
 
     object ChapterDetails : Screen(
         route = "chapter_details",
-        arguments = listOf(navArgument("chapter_id") { type = NavType.StringType })
+        arguments = listOf(
+            navArgument("chapter_id") { type = NavType.StringType },
+            navArgument("page") { type = NavType.IntType }
+        )
     )
 }

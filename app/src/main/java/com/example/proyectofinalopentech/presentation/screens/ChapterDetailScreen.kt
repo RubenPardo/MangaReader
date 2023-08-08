@@ -57,6 +57,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ChapterDetailScreen(
     chapterId: String,
+    initPage: Int = 0,
     chapterReaderViewModel: ChapterReaderViewModel = koinViewModel(),
     goBack: () -> Unit
 ) {
@@ -82,15 +83,13 @@ fun ChapterDetailScreen(
         uiState.chapterDetail?.let {chapterDetail->
 
             val pagerState = rememberPagerState(
-                initialPage = 0,
+                initialPage = initPage,
                 initialPageOffsetFraction = 0.0f
             ) {
                 chapterDetail.listPageUrls.size
             }
 
             var readerMode by remember { mutableStateOf(false) } // false = vertical
-            var isFav by remember { mutableStateOf(false) } // false = vertical
-
 
             Column(verticalArrangement = Arrangement.SpaceBetween) {
                 ChapterInfo(

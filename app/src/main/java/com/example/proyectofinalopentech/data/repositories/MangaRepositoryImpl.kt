@@ -147,7 +147,7 @@ class MangaRepositoryImpl (
         return try {
             val res = remoteDataSource.getChapterDetail(chapterId)
             println(res.result)
-            Response.Success(res.toDomain())
+            Response.Success(res.toDomain(chapterId))
         }catch (e: Exception){
             Response.Error(e.message)
         }

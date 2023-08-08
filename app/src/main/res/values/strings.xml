@@ -13,4 +13,6 @@
     <string name="reader_mode_horizontal">Horizontal reading mode, change to Vertical</string>
     <string name="go_back_to_manga_details">Go back to manga details</string>
     <string name="unable_to_load_chapter">Unable to load chapter. Try Again.</string>
+    <string name="fav_panel">Page Favorite</string>
+    <string name="empty_saved_panels">No saved manga panels</string>
 </resources>

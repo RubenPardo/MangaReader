@@ -18,9 +18,11 @@ fun NavGraphBuilder.addMangaSearchScreen(navController: NavController, scrollSta
     }
 }
 
-fun NavGraphBuilder.addSavedPanelsScreen(navController: NavHostController) {
+fun NavGraphBuilder.addSavedPanelsScreen(navController: NavHostController, scrollState: LazyListState) {
     composable(Screen.SavedPanelsScreen.route){
-        SavedPanelsScreen()
+        SavedPanelsScreen(
+            scrollState,
+            goToChapterDetail = {chpId,page -> navController.navigate(Screen.ChapterDetails.route + "/$chpId/$page")})
     }
 }
 
@@ -38,19 +40,21 @@ fun NavGraphBuilder.addMangaDetails(navController: NavHostController) {
             val id = it.arguments?.getString("manga_id") ?: ""
             MangaDetails(
                 mangaId = id,
-                goToChapterDetail = {chpId -> navController.navigate(Screen.ChapterDetails.route + "/$chpId")}
+                goToChapterDetail = {chpId,page -> navController.navigate(Screen.ChapterDetails.route + "/$chpId/$page")}
             )
         }
 }
 
 fun NavGraphBuilder.addChapterDetails(navController: NavHostController) {
     composable(
-        route = Screen.ChapterDetails.route + "/{chapter_id}",
+        route = Screen.ChapterDetails.route + "/{chapter_id}/{page}",
         arguments = Screen.ChapterDetails.arguments)
     {
         val id = it.arguments?.getString("chapter_id") ?: ""
+        val page = it.arguments?.getInt("page") ?: 0
         ChapterDetailScreen(
-            chapterId = id
+            chapterId = id,
+            initPage = page
         ) {
             if (navController.previousBackStackEntry != null) {
                 navController.navigateUp()

@@ -30,13 +30,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.proyectofinalopentech.R
 import com.example.proyectofinalopentech.domain.model.Chapter
 import com.example.proyectofinalopentech.domain.model.Manga
-import com.example.proyectofinalopentech.domain.model.builders.MangaBuilder
 import com.example.proyectofinalopentech.presentation.common.LoadingView
 import com.example.proyectofinalopentech.presentation.common.SaveIcon
 import com.example.proyectofinalopentech.presentation.common.TagList
@@ -51,7 +49,7 @@ import org.koin.androidx.compose.koinViewModel
 fun MangaDetails(
     mangaId: String,
     mangaDetailsViewModel: MangaDetailsViewModel = koinViewModel(),
-    goToChapterDetail: (chapterId:String) -> Unit
+    goToChapterDetail: (chapterId:String,page:Int) -> Unit
 ) {
     LaunchedEffect(true){
         // init view model
@@ -161,7 +159,7 @@ fun BuildHeader(mangaInfo: Manga, viewModel: MangaDetailsViewModel?) {
 fun BuildChapters(
     uiState: MangaDetailsUiState,
     retryCallback: () -> Unit,
-    goToChapterDetail: (chapterId: String) -> Unit
+    goToChapterDetail: (chapterId: String,page:Int) -> Unit
 ){
 
     if(uiState.isLoadingChapters){
@@ -180,7 +178,7 @@ fun BuildChapters(
 }
 
 @Composable
-fun BuildListChapters(chapters: List<Chapter>, goToChapterDetail: (chapterId: String) -> Unit) {
+fun BuildListChapters(chapters: List<Chapter>, goToChapterDetail: (chapterId: String, page: Int) -> Unit) {
     chapters.forEachIndexed{index,chapter ->
         Column (
             modifier = Modifier
@@ -200,11 +198,11 @@ fun BuildListChapters(chapters: List<Chapter>, goToChapterDetail: (chapterId: St
 }
 
 @Composable
-fun BuildChapter(it: Chapter, goToChapterDetail: (chapterId: String) -> Unit) {
+fun BuildChapter(it: Chapter, goToChapterDetail: (chapterId: String, page: Int) -> Unit) {
     Text("CHAPTER ${it.name}",
         modifier = Modifier.padding(start = 12.dp)
             .fillMaxWidth()
-            .clickable { goToChapterDetail.invoke(it.id) }
+            .clickable { goToChapterDetail.invoke(it.id,0) }
     )
 }
 

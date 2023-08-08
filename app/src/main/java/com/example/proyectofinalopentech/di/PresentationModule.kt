@@ -5,6 +5,7 @@ import com.example.proyectofinalopentech.presentation.viewmodels.ChapterReaderVi
 import com.example.proyectofinalopentech.presentation.viewmodels.MangaDetailsViewModel
 import com.example.proyectofinalopentech.presentation.viewmodels.MangaListViewModel
 import com.example.proyectofinalopentech.presentation.viewmodels.MyMangasViewModel
+import com.example.proyectofinalopentech.presentation.viewmodels.MyPagesViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
@@ -18,6 +19,6 @@ val presentationModule = module{
     viewModelOf(::MyMangasViewModel)
     viewModel{ ChapterReaderViewModel(get(),get()) }
     viewModelOf(::ChapterReaderViewModel)
-    //viewModel{ HeroDetailsViewModel(get(),get(), get(),get(),get()) }
-    //viewModelOf(::HeroDetailsViewModel)*/
+    viewModel{ MyPagesViewModel(get()) }
+    viewModelOf(::MyPagesViewModel)
 }

@@ -51,11 +51,11 @@ class ChapterReaderViewModel(
                 when(  val response = setMangaPageFavUseCase(currentPage)){
                     // error
                     is Response.Error -> {
-
+                        println("CHAPTER DETAIL ERROR: ${response.message}")
                     }
                     // content
                     is Response.Success ->{
-                        val newPage = chapterDetail.listPageUrls[mangaPageIndex].copy(isFav = response.data?:false)
+                        val newPage = chapterDetail.listPageUrls[mangaPageIndex].copy(isFav = !currentPage.isFav)
                         val newList = chapterDetail.listPageUrls.toMutableList()
                         newList[mangaPageIndex] = newPage
                         emitNewState(currentState.copy(chapterDetail = chapterDetail.copy(listPageUrls = newList)))

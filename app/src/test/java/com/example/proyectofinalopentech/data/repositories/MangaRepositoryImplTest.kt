@@ -8,7 +8,6 @@ import com.example.proyectofinalopentech.data.model.ChapterDTO
 import com.example.proyectofinalopentech.data.model.ChapterDetailDTO
 import com.example.proyectofinalopentech.data.model.ChapterDetailResponseDTO
 import com.example.proyectofinalopentech.data.model.ChapterResponseDTO
-import com.example.proyectofinalopentech.data.model.MangaResponseTestDTOBuilder
 import com.example.proyectofinalopentech.data.model.VolumeDTO
 import com.example.proyectofinalopentech.data.model.mappers.toDomain
 import com.example.proyectofinalopentech.data.model.mappers.toLocal
@@ -20,13 +19,11 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
-import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.kotlin.any
 
 
 class MangaRepositoryImplTest{
@@ -263,7 +260,7 @@ class MangaRepositoryImplTest{
             )
         )
 
-        val expectedChapterDetail = chapterDetailDto.toDomain()
+        val expectedChapterDetail = chapterDetailDto.toDomain(chapterId)
 
         coEvery { remoteDataSource.getChapterDetail(chapterId) }  returns chapterDetailDto
 
