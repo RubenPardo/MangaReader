@@ -15,8 +15,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.proyectofinalopentech.R
 import com.example.proyectofinalopentech.navigation.Screen
+import com.example.proyectofinalopentech.presentation.common.EmptyView
 import com.example.proyectofinalopentech.presentation.common.LoadingView
 import com.example.proyectofinalopentech.presentation.mangalist.ErrorItemList
 import com.example.proyectofinalopentech.presentation.mangalist.MangaItemList
@@ -40,17 +43,24 @@ fun MyMangasScreen(
     }else if(uiState.isError){
         ErrorItemList(message = uiState.messageError) { myMangasViewModel.getFavMangas() }
     } else{
-        LazyColumn(
-            state = scrollState
-        ){
 
-            items(uiState.favMangas.size){index->
-                MangaItemList(manga = uiState.favMangas[index],gotToMangaDetails,scrollState)
-                if(index == uiState.favMangas.size-1){
-                    Spacer(modifier = Modifier.height(56.dp))
+        if(uiState.favMangas.isEmpty()){
+            EmptyView(content = stringResource(id = R.string.empty_fav_mangas))
+        }else{
+            LazyColumn(
+                state = scrollState
+            ){
+
+                items(uiState.favMangas.size){index->
+                    MangaItemList(manga = uiState.favMangas[index],gotToMangaDetails,scrollState)
+                    if(index == uiState.favMangas.size-1){
+                        Spacer(modifier = Modifier.height(56.dp))
+                    }
                 }
             }
         }
+
+
     }
 
 }

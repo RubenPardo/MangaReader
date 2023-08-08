@@ -7,8 +7,11 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.proyectofinalopentech.R
+import com.example.proyectofinalopentech.presentation.common.EmptyView
 import com.example.proyectofinalopentech.presentation.common.LoadingView
 import com.example.proyectofinalopentech.presentation.viewmodels.MangaListViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -23,56 +26,59 @@ fun MangaList(
 
     val pagingData = mangaListViewModel.get(mangaName = mangaName).collectAsLazyPagingItems()
 
-    LazyColumn(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize(),
-        state = scrollState
-    ){
+    if(pagingData.itemCount == 0){
+        EmptyView(content = stringResource(id = R.string.empty_search))
+    }else{
+        LazyColumn(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxSize(),
+            state = scrollState
+        ){
 
 
-        items(pagingData.itemCount){ index ->
-            pagingData[index]?.let {
-                MangaItemList(manga = it,gotToMangaDetails,scrollState)
+            items(pagingData.itemCount){ index ->
+                pagingData[index]?.let {
+                    MangaItemList(manga = it,gotToMangaDetails,scrollState)
+                }
+
+            }
+            pagingData.apply {
+                when {
+                    // cuando esta cargando por primera vez
+                    loadState.refresh is LoadState.Loading -> {
+                        item{ LoadingView(modifier = Modifier.fillMaxSize()) }
+                    }
+
+                    // cargando mas elementos
+                    loadState.append is LoadState.Loading -> { item{ LoadingItemList() } }
+
+                    // cuando la priemra carga da error
+                    loadState.refresh is LoadState.Error -> {
+                        val e = pagingData.loadState.refresh as LoadState.Error
+                        item{
+                            ErrorItemList(
+                                message = e.error.localizedMessage!!,
+                                modifier = Modifier.fillParentMaxSize(),
+                                onClickRetry = { retry() }
+                            )
+                        }
+                    }
+                    // cuando cargar mas elementos da error
+                    loadState.append is LoadState.Error -> {
+                        val e = pagingData.loadState.append as LoadState.Error
+                        item {
+                            ErrorItemList(
+                                message = e.error.localizedMessage!!,
+                                onClickRetry = { retry() }
+                            )
+                        }
+                    }
+                }
             }
 
         }
-        pagingData.apply {
-            when {
-                // cuando esta cargando por primera vez
-                loadState.refresh is LoadState.Loading -> {
-                    item{ LoadingView(modifier = Modifier.fillMaxSize()) }
-                }
-
-                // cargando mas elementos
-                loadState.append is LoadState.Loading -> { item{ LoadingItemList() } }
-
-                // cuando la priemra carga da error
-                loadState.refresh is LoadState.Error -> {
-                    val e = pagingData.loadState.refresh as LoadState.Error
-                    item{
-                        ErrorItemList(
-                            message = e.error.localizedMessage!!,
-                            modifier = Modifier.fillParentMaxSize(),
-                            onClickRetry = { retry() }
-                        )
-                    }
-                }
-                // cuando cargar mas elementos da error
-                loadState.append is LoadState.Error -> {
-                    val e = pagingData.loadState.append as LoadState.Error
-                    item {
-                        ErrorItemList(
-                            message = e.error.localizedMessage!!,
-                            onClickRetry = { retry() }
-                        )
-                    }
-                }
-            }
-        }
-
     }
-
 
 
 }
