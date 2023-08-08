@@ -95,7 +95,7 @@ fun ChapterDetailScreen(
             Column(verticalArrangement = Arrangement.SpaceBetween) {
                 ChapterInfo(
                     maxPages = pagerState.pageCount,
-                    currentPage = pagerState.currentPage,
+                    currentPage = pagerState.currentPage+1,
                     readerMode = readerMode,
                     isFav = isFav,
                     changeReaderModeCallback = {readerMode = !readerMode},
