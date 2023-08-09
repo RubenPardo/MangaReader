@@ -196,10 +196,10 @@ fun HorizontalReader(pages: List<MangaPage>, pagerState: PagerState){
                     modifier = Modifier
                         .zoomable(rememberZoomState())
                         .fillMaxSize(),
-                    placeholder = painterResource(R.drawable.ic_launcher_background),
+                    placeholder = painterResource(R.drawable.image_placeholder),
                     model = pages[pageIndex].pageLR,
                     contentDescription = stringResource(id = R.string.page) + pageIndex,
-                    error = painterResource(R.drawable.ic_launcher_background),
+                    error = painterResource(R.drawable.image_placeholder),
                     contentScale = ContentScale.FillWidth
 
                 )
