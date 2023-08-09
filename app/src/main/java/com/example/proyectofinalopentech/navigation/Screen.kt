@@ -8,7 +8,10 @@ sealed class Screen(
     val route:String,
     val arguments: List<NamedNavArgument>
 ){
-
+    object HomeScreen : Screen(
+        route = "home",
+        arguments = emptyList()
+    )
 
     object SavedPanelsScreen : Screen(
         route = "saved_panels",

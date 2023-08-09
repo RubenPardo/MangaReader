@@ -51,6 +51,10 @@ class MainActivity(): ComponentActivity() {
                 val currentRoute = navBackStackEntry?.destination?.route
                 // Control TopBar and BottomBar
                 when (currentRoute) {
+                    Screen.HomeScreen.route -> {
+                        showTopBar = false
+                        bottomBarState.value = false
+                    }
                     Screen.MangaDetails.route+"/{manga_id}" -> {
                         bottomBarState.value = false
                         topBarStateShowBack.value = true

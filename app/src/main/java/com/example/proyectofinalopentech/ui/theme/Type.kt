@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
 // Set of Material typography styles to start with
@@ -44,6 +45,22 @@ val Typography.searchHint: TextStyle
             color = MaterialTheme.colorScheme.hintText,
             fontSize = 18.sp
         )
+
+val Typography.appTitle: TextStyle
+    @Composable
+    get() = TextStyle(
+        fontFamily = FontFamily.Monospace,
+        fontWeight = FontWeight.Bold,
+        fontSize = 48.sp
+    )
+
+val Typography.appDesc: TextStyle
+    @Composable
+    get() = TextStyle(
+        fontFamily = FontFamily.Monospace,
+        fontSize = 28.sp,
+    )
+
 
 val Typography.primaryButton: TextStyle
     @Composable

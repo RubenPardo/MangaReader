@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.example.proyectofinalopentech.presentation.screens.ChapterDetailScreen
+import com.example.proyectofinalopentech.presentation.screens.HomeScreen
 import com.example.proyectofinalopentech.presentation.screens.MangaDetails
 import com.example.proyectofinalopentech.presentation.screens.MangaSearchScreen
 import com.example.proyectofinalopentech.presentation.screens.MyMangasScreen
@@ -15,6 +16,16 @@ import com.example.proyectofinalopentech.presentation.screens.SavedPanelsScreen
 fun NavGraphBuilder.addMangaSearchScreen(navController: NavController, scrollState: LazyListState){
     composable(Screen.MangaSearchScreen.route){
         MangaSearchScreen(scrollState) { navController.navigate(Screen.MangaDetails.route + "/$it") }
+    }
+}
+
+fun NavGraphBuilder.addHome(navController: NavController){
+    composable(Screen.HomeScreen.route){
+        HomeScreen() { navController.navigate(Screen.MangaSearchScreen.route){
+            popUpTo(Screen.HomeScreen.route) {
+                inclusive = true
+            }
+        } }
     }
 }
 
