@@ -45,10 +45,14 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
 
+    implementation 'androidx.cardview:cardview:1.0.0'
     def paging_version = "3.2.0" //current version at the time
     implementation "androidx.paging:paging-runtime:$paging_version"
     // Jetpack Compose Integration
@@ -94,6 +98,9 @@ dependencies {
     testImplementation "org.mockito.kotlin:mockito-kotlin:5.0.0"
     // navigation
     implementation "androidx.navigation:navigation-compose:2.6.0"
+
+    //AVS Integration
+    implementation "androidx.compose.ui:ui-viewbinding"
 
     // mock
     testImplementation 'androidx.arch.core:core-testing:2.2.0'

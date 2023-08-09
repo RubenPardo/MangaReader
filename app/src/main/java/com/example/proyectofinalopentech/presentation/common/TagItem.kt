@@ -7,19 +7,24 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.proyectofinalopentech.databinding.TagLayoutBinding
 import com.example.proyectofinalopentech.ui.theme.tagStyle
+import androidx.compose.ui.viewinterop.AndroidViewBinding
 
 @Composable
 fun TagItem(tag: String, modifier: Modifier){
-    Card (
+
+
+    AndroidViewBinding(TagLayoutBinding::inflate) {
+        tvTagText.text = tag
+    }
+    /*Card (
         modifier = modifier,
         elevation = CardDefaults.cardElevation(2.dp),
         colors = CardDefaults.cardColors(Color.LightGray)){
@@ -32,7 +37,7 @@ fun TagItem(tag: String, modifier: Modifier){
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
         )
-    }
+    }*/
 }
 
 @Preview
