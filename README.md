@@ -17,4 +17,4 @@ Aplicación que consume la API de [MangaDex](https://api.mangadex.org/docs/).
 ## App
   Init           |  Manga List | Manga Details | Manga Reader
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://github.com/RubenPardo/MangaReader/blob/master/init.png" alt="drawing" width="200"/> | <img src="https://github.com/RubenPardo/MangaReader/blob/master/list.png" alt="drawing" width="200"/>| <img src="https://github.com/RubenPardo/MangaReader/blob/master/details.png" alt="drawing" width="200"/>| <img src="https://github.com/RubenPardo/MangaReader/blob/master/reader.png" alt="drawing" width="200"/>
+<img src="https://github.com/RubenPardo/MangaReader/blob/main/init.png" alt="drawing" width="200"/> | <img src="https://github.com/RubenPardo/MangaReader/blob/main/list.png" alt="drawing" width="200"/>| <img src="https://github.com/RubenPardo/MangaReader/blob/main/details.png" alt="drawing" width="200"/>| <img src="https://github.com/RubenPardo/MangaReader/blob/main/reader.png" alt="drawing" width="200"/>
