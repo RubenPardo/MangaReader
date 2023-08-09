@@ -10,7 +10,7 @@ fun NavigationGraph(navController: NavHostController, scrollState: LazyListState
 
     NavHost(
         navController = navController,
-        startDestination = Screen.SavedPanelsScreen.route){
+        startDestination = Screen.MangaSearchScreen.route){
         addMangaSearchScreen(navController,scrollState)
         addSavedPanelsScreen(navController,scrollState)
         addMyMangasScreen(navController,scrollState)

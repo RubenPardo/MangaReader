@@ -26,7 +26,7 @@ fun MangaList(
 
     val pagingData = mangaListViewModel.get(mangaName = mangaName).collectAsLazyPagingItems()
 
-    if(pagingData.itemCount == 0){
+    if(pagingData.itemCount == 0 && pagingData.loadState.refresh !is LoadState.Loading){
         EmptyView(content = stringResource(id = R.string.empty_search))
     }else{
         LazyColumn(

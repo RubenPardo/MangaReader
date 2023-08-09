@@ -63,10 +63,10 @@ fun SavedPanelsScreen(
                             .fillMaxSize()
                             .clickable { goToChapterDetail.invoke(it.chapterId,it.page) }
                             .padding(8.dp),
-                        placeholder = painterResource(R.drawable.ic_launcher_background),
+                        placeholder = painterResource(R.drawable.image_placeholder),
                         model = it.pageLR,
                         contentDescription = stringResource(id = R.string.fav_panel),
-                        error = painterResource(R.drawable.ic_launcher_background),
+                        error = painterResource(R.drawable.image_placeholder),
                         contentScale = ContentScale.FillWidth
 
                     )

@@ -117,7 +117,7 @@ fun BuildMangaInfo(mangaInfo: Manga) {
 
         Text(text = mangaInfo.title, style = MaterialTheme.typography.titleMangaItem)
         Spacer(modifier = Modifier.height(16.dp))
-        TagList(tags = mangaInfo.tags)
+        TagList(tags = mangaInfo.tags, maxItems = 2)
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = mangaInfo.description, style = MaterialTheme.typography.subtitleSmall)
 
@@ -129,10 +129,10 @@ fun BuildHeader(mangaInfo: Manga, viewModel: MangaDetailsViewModel?) {
 
         Box{
             AsyncImage(
-                placeholder = painterResource(R.drawable.ic_launcher_background),
+                placeholder = painterResource(R.drawable.image_placeholder),
                 model = mangaInfo.fullImageUrl,
                 contentDescription = null,
-                error = painterResource(R.drawable.ic_launcher_background),
+                error = painterResource(R.drawable.image_placeholder),
                 contentScale = ContentScale.FillHeight,
                 modifier = Modifier
                     .fillMaxWidth()

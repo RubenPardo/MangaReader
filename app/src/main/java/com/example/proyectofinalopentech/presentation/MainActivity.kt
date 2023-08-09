@@ -139,9 +139,9 @@ class MainActivity(): ComponentActivity() {
                        restoreState = true
                    }},
                listOf(
-                   BottomNavigationScreens.SavedPanels,
                    BottomNavigationScreens.MangaSearch,
                    BottomNavigationScreens.MyMangas,
+                   BottomNavigationScreens.SavedPanels,
                ),
                navController = navController,
                hide = false)
