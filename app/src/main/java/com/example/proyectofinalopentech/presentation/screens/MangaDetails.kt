@@ -30,6 +30,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.proyectofinalopentech.R
@@ -115,7 +117,7 @@ fun BuildMangaInfo(mangaInfo: Manga) {
             .padding(16.dp)
             .fillMaxWidth()) {
 
-        Text(text = mangaInfo.title, style = MaterialTheme.typography.titleMangaItem)
+        Text(text = mangaInfo.title, style = MaterialTheme.typography.titleMangaItem,)
         Spacer(modifier = Modifier.height(16.dp))
         TagList(tags = mangaInfo.tags, maxItems = 2)
         Spacer(modifier = Modifier.height(16.dp))

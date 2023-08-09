@@ -1,6 +1,7 @@
 package com.example.proyectofinalopentech.presentation.screens
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,6 +34,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,6 +51,7 @@ import com.example.proyectofinalopentech.presentation.common.SaveIcon
 import com.example.proyectofinalopentech.presentation.mangalist.ErrorItemList
 import com.example.proyectofinalopentech.presentation.viewmodels.ChapterReaderViewModel
 import com.example.proyectofinalopentech.ui.theme.subtitleSmall
+import kotlinx.coroutines.launch
 import net.engawapg.lib.zoomable.rememberZoomState
 import net.engawapg.lib.zoomable.zoomable
 import org.koin.androidx.compose.koinViewModel
@@ -102,10 +105,18 @@ fun ChapterDetailScreen(
                     goBack = goBack
                 )
 
+                val scope = rememberCoroutineScope()
+                val nextPageCallback:()-> Unit ={
+                    scope.launch {
+                        pagerState.scrollToPage(pagerState.currentPage + 1)
+                    }
+                }
                 if(readerMode)
-                    HorizontalReader(pages = chapterDetail.listPageUrls,pagerState = pagerState)
+                    HorizontalReader(
+                        pages = chapterDetail.listPageUrls,
+                        pagerState = pagerState, nextPageCallback )
                 else
-                    VerticalReader(pages = chapterDetail.listPageUrls,pagerState = pagerState)
+                    VerticalReader(pages = chapterDetail.listPageUrls,pagerState = pagerState,nextPageCallback)
 
 
 
@@ -170,13 +181,15 @@ fun ChangeReaderModeIcon(readerMode: Boolean, callback: () -> Unit) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HorizontalReader(pages: List<MangaPage>, pagerState: PagerState){
+fun HorizontalReader(pages: List<MangaPage>, pagerState: PagerState, nextPageCallback: () -> Unit){
+
+
+
     HorizontalPager(
         modifier = Modifier,
         state = pagerState,
         pageSpacing = 0.dp,
         userScrollEnabled = true,
-        reverseLayout = false,
         contentPadding = PaddingValues(0.dp),
         beyondBoundsPageCount = 0,
         pageSize = PageSize.Fill,
@@ -195,7 +208,8 @@ fun HorizontalReader(pages: List<MangaPage>, pagerState: PagerState){
                 AsyncImage(
                     modifier = Modifier
                         .zoomable(rememberZoomState())
-                        .fillMaxSize(),
+                        .fillMaxSize()
+                        .clickable {nextPageCallback.invoke() },
                     placeholder = painterResource(R.drawable.image_placeholder),
                     model = pages[pageIndex].pageLR,
                     contentDescription = stringResource(id = R.string.page) + pageIndex,
@@ -210,13 +224,12 @@ fun HorizontalReader(pages: List<MangaPage>, pagerState: PagerState){
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun VerticalReader(pages: List<MangaPage>, pagerState: PagerState){
+fun VerticalReader(pages: List<MangaPage>, pagerState: PagerState, nextPageCallback: () -> Unit){
     VerticalPager(
         modifier = Modifier,
         state = pagerState,
         pageSpacing = 0.dp,
         userScrollEnabled = true,
-        reverseLayout = false,
         contentPadding = PaddingValues(0.dp),
         beyondBoundsPageCount = 0,
         pageSize = PageSize.Fill,
@@ -235,10 +248,11 @@ fun VerticalReader(pages: List<MangaPage>, pagerState: PagerState){
                 AsyncImage(
                     modifier = Modifier
                         .zoomable(rememberZoomState())
-                        .fillMaxSize(),
+                        .fillMaxSize()
+                        .clickable {nextPageCallback.invoke() },
                     placeholder = painterResource(R.drawable.image_placeholder),
                     model = pages[pageIndex].pageLR,
-                    contentDescription = stringResource(id = R.string.page) + pageIndex,
+                    contentDescription = stringResource(id = R.string.page) + (pageIndex+1),
                     error = painterResource(R.drawable.image_placeholder),
                     contentScale = ContentScale.FillWidth
 

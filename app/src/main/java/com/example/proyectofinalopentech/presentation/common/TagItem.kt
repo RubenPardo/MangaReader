@@ -9,6 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -22,6 +25,7 @@ fun TagItem(tag: String, modifier: Modifier){
         colors = CardDefaults.cardColors(Color.LightGray)){
         Text(
             modifier = Modifier
+                .clearAndSetSemantics { contentDescription = "Manga Tag $tag" }
                 .padding(vertical = 4.dp, horizontal = 8.dp),
             text = tag,
             style = MaterialTheme.typography.tagStyle,

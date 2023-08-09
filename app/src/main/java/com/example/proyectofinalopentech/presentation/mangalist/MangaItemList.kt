@@ -22,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -67,20 +69,21 @@ fun BuildMangaContent(
             TagList(tags = manga.tags,maxItems = 1)
 
         }
-        BuildButtonReadNow(manga.id,gotToMangaDetails,scrollState)
+        BuildButtonReadNow(manga,gotToMangaDetails,scrollState)
 
     }
 }
 
 @Composable
 fun BuildButtonReadNow(
-    mangaId: String,
+    manga: Manga,
     gotToMangaDetails: (mangaId: String) -> Unit,
     scrollState: LazyListState
 ) {
     val scope = rememberCoroutineScope()
 
     Button(
+        modifier = Modifier.semantics { contentDescription = "Read now: ${manga.title}" },
         shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
         onClick = {
@@ -90,7 +93,7 @@ fun BuildButtonReadNow(
                     this.scrollBy(-5f)
                 }
             }
-            gotToMangaDetails.invoke(mangaId)
+            gotToMangaDetails.invoke(manga.id)
 
         })
     {
