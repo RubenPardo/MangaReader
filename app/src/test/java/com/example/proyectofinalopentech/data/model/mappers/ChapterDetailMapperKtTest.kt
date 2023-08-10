@@ -25,7 +25,7 @@ class ChapterDetailMapperKtTest{
                 Array(numPages){it.toString()}.toList(),
             ))
 
-        val res = dto.toDomain(chapterId)
+        val res = dto.toDomain("chapterId")
 
         Assert.assertEquals(res.listPageUrls.size, numPages)
         res.listPageUrls.forEachIndexed{index,page ->

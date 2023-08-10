@@ -35,7 +35,7 @@ class GetFavMangaPagesUseCaseTest{
 
     @Test
     fun `WHEN manga repo return success EXPECT a success but reversed data`() = runTest {
-        val responseRepoPages: List<MangaPage> = listOf(MangaPage("","",false),MangaPage("","",true))
+        val responseRepoPages: List<MangaPage> = listOf(MangaPage("","","",false,0),MangaPage("","","",true,0))
         val expectedPages = responseRepoPages.reversed()
         coEvery { mangaRepository.getFavMangaPages() } returns Response.Success(responseRepoPages)
 

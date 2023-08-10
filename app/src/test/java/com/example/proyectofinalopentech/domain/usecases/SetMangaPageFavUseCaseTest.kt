@@ -38,7 +38,7 @@ class SetMangaPageFavUseCaseTest{
      @Test
      fun `WHEN call use case with a manga is Fav = false EXPECT make a call to repository saveFav`() = runTest {
 
-        val page = MangaPage("","",false)
+        val page = MangaPage("","","",false,0)
          coEvery { mangaRepository.saveMangaPage(page) } returns Response.Success(true)
 
         val response = setMangaPageFavUseCase.invoke(page)
@@ -53,7 +53,7 @@ class SetMangaPageFavUseCaseTest{
     @Test
     fun `WHEN call use case with a manga is Fav = true EXPECT make a call to repository removeFav`() = runTest {
 
-        val page = MangaPage("","",true)
+        val page = MangaPage("","","",true,0)
         coEvery { mangaRepository.removeMangaPage(page) } returns Response.Success(true)
 
         val response = setMangaPageFavUseCase.invoke(page)

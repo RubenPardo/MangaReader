@@ -41,9 +41,9 @@ class GetChapterDetailUseCaseTest{
 
          val chapterId = "1"
          val numPages = 5
-         val mangaPage = MangaPage("","",false)
+         val mangaPage = MangaPage("","","",false,0)
          val chapterRes = ChapterDetail(Array(numPages){mangaPage}.toList())
-         val chapterResExpected = ChapterDetail(Array(numPages){MangaPage("","",true)}.toList())
+         val chapterResExpected = ChapterDetail(Array(numPages){MangaPage("","","",true,0)}.toList())
 
 
          coEvery { mangaRepository.getChapterDetail(chapterId) } returns Response.Success(chapterRes)
