@@ -123,6 +123,7 @@ class MainActivity(): ComponentActivity() {
 
     @Composable
     private fun BuildNavBar(show: Boolean, navController: NavHostController) {
+
        return AnimatedVisibility(
            visible = show,
            enter = slideInVertically(initialOffsetY = { it / 2 }),

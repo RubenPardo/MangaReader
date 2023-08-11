@@ -17,6 +17,6 @@
     <string name="fav_panel">Page Favorite</string>
     <string name="empty_saved_panels">No saved manga panels</string>
     <string name="empty_fav_mangas">No mangas saved as favourite</string>
-    <string name="empty_search">No manga founded :(</string>
+    <string name="empty_search">No manga found :(</string>
     <string name="read">Read</string>
 </resources>
